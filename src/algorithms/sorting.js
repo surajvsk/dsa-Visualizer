@@ -16,7 +16,7 @@ export function bubbleSortSteps(arr) {
     swapped: false,
     sorted: [],
     line: 0,
-    description: 'Start Bubble Sort — adjacent pairs will be compared.',
+    description: 'Bubble Sort shuru. Do padosi numbers dekhenge — jo bada hai, wo right ko jaayega.',
   });
 
   for (let i = 0; i < a.length; i++) {
@@ -29,7 +29,7 @@ export function bubbleSortSteps(arr) {
         swapped: false,
         sorted,
         line: 2,
-        description: `Compare ${a[j].value} and ${a[j + 1].value}`,
+        description: `In dono ko dekho: ${a[j].value} aur ${a[j + 1].value}. Kaun bada hai?`,
       });
 
       if (a[j].value > a[j + 1].value) {
@@ -41,7 +41,7 @@ export function bubbleSortSteps(arr) {
           swapped: true,
           sorted,
           line: 4,
-          description: `Swap — ${a[j].value} now sits left of ${a[j + 1].value}`,
+          description: `Galat order tha, jagah badli. Ab ${a[j].value} left, ${a[j + 1].value} right.`,
         });
       }
     }
@@ -53,7 +53,7 @@ export function bubbleSortSteps(arr) {
         sorted: Array.from({ length: a.length }, (_, k) => k),
         done: true,
         line: 6,
-        description: 'No swaps in this pass — array is already sorted.',
+        description: 'Is daur mein koi swap nahi — pehle se sahi order mein hain.',
       });
       return steps;
     }
@@ -66,7 +66,7 @@ export function bubbleSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 7,
-    description: 'Done. Largest values have bubbled to the right.',
+    description: 'Ho gaya. Sabse bade numbers right aa chuke — jaise bubble upar uthte hain.',
   });
   return steps;
 }
@@ -80,7 +80,7 @@ export function mergeSortSteps(arr) {
     comparing: [],
     range: [0, a.length - 1],
     line: 0,
-    description: 'Start Merge Sort — divide the array, then merge sorted halves.',
+    description: 'Merge Sort: pehle list aadha-aadha kaato, phir chhote sorted tukde jodo.',
   });
 
   function mergeSort(l, r) {
@@ -91,7 +91,7 @@ export function mergeSortSteps(arr) {
       comparing: [],
       range: [l, r],
       line: 1,
-      description: `Divide range [${l}…${r}] at mid ${mid}`,
+      description: `Is hisse ko aadha kaato (${l} se ${r}). Beech = ${mid}.`,
     });
     mergeSort(l, mid);
     mergeSort(mid + 1, r);
@@ -111,7 +111,7 @@ export function mergeSortSteps(arr) {
         comparing: [l + i, mid + 1 + j],
         range: [l, r],
         line: 6,
-        description: `Merge [${l}…${r}]: compare ${left[i].value} and ${right[j].value}`,
+        description: `Do tukde jod rahe hain. ${left[i].value} aur ${right[j].value} mein se chhota aage aayega.`,
       });
       if (left[i].value <= right[j].value) {
         a[k] = left[i];
@@ -126,7 +126,7 @@ export function mergeSortSteps(arr) {
         swapped: true,
         range: [l, r],
         line: 8,
-        description: `Place ${a[k].value} at index ${k}`,
+        description: `${a[k].value} ko jagah ${k} par rakh diya.`,
       });
       k += 1;
     }
@@ -138,7 +138,7 @@ export function mergeSortSteps(arr) {
         comparing: [k],
         range: [l, r],
         line: 12,
-        description: `Copy remaining ${a[k].value} from left half`,
+        description: `Left tukde ka bacha ${a[k].value} bhi rakh diya.`,
       });
       i += 1;
       k += 1;
@@ -151,7 +151,7 @@ export function mergeSortSteps(arr) {
         comparing: [k],
         range: [l, r],
         line: 15,
-        description: `Copy remaining ${a[k].value} from right half`,
+        description: `Right tukde ka bacha ${a[k].value} bhi rakh diya.`,
       });
       j += 1;
       k += 1;
@@ -165,7 +165,7 @@ export function mergeSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 17,
-    description: 'Merge Sort complete.',
+    description: 'Merge Sort khatam. Chhote tukde jod-jod ke poori list sorted ho gayi.',
   });
   return steps;
 }
@@ -179,7 +179,7 @@ export function quickSortSteps(arr) {
     comparing: [],
     pivot: null,
     line: 0,
-    description: 'Start Quick Sort — pick a pivot, partition, recurse.',
+    description: 'Quick Sort: ek leader (pivot) chuno. Chhote uske left, bade right.',
   });
 
   function partition(low, high) {
@@ -191,7 +191,7 @@ export function quickSortSteps(arr) {
       pivot: high,
       range: [low, high],
       line: 2,
-      description: `Pivot = ${pivotValue} (index ${high})`,
+      description: `Yeh hamara leader hai: ${pivotValue}. Isi se baaki ko naapen ge.`,
     });
 
     for (let j = low; j < high; j++) {
@@ -201,7 +201,7 @@ export function quickSortSteps(arr) {
         pivot: high,
         range: [low, high],
         line: 5,
-        description: `Compare ${a[j].value} with pivot ${pivotValue}`,
+        description: `${a[j].value} ko leader ${pivotValue} se naap rahe hain.`,
       });
       if (a[j].value < pivotValue) {
         [a[i], a[j]] = [a[j], a[i]];
@@ -212,7 +212,7 @@ export function quickSortSteps(arr) {
           pivot: high,
           range: [low, high],
           line: 7,
-          description: `${a[i].value} is smaller than pivot — swap into left side`,
+          description: `${a[i].value} leader se chhota hai — left side bhej diya.`,
         });
         i += 1;
       }
@@ -225,7 +225,7 @@ export function quickSortSteps(arr) {
       pivot: i,
       range: [low, high],
       line: 10,
-      description: `Place pivot ${a[i].value} at index ${i}`,
+      description: `Leader ${a[i].value} ab beech mein baith gaya. Left chhote, right bade.`,
     });
     return i;
   }
@@ -245,7 +245,7 @@ export function quickSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 16,
-    description: 'Quick Sort complete.',
+    description: 'Quick Sort khatam. Har hisse ka leader apni sahi jagah aa gaya.',
   });
   return steps;
 }

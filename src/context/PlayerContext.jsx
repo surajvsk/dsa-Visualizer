@@ -1,17 +1,34 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 const PlayerContext = createContext(null);
 
 export function PlayerProvider({ children }) {
-  const [speed, setSpeed] = useState(450);
-  const [darkMode, setDarkMode] = useState(true);
+  const [speed, setSpeed] = useState(850);
   const [controls, setControls] = useState(null);
 
   const register = useCallback((api) => setControls(api), []);
 
+  useEffect(() => {
+    function onKey(e) {
+      if (!controls) return;
+      const tag = e.target?.tagName;
+      if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (controls.isPlaying) controls.pause();
+        else controls.play();
+      }
+      if (e.code === 'ArrowRight') controls.next();
+      if (e.code === 'ArrowLeft') controls.prev();
+      if (e.key === 'r' || e.key === 'R') controls.reset();
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [controls]);
+
   const value = useMemo(
-    () => ({ speed, setSpeed, darkMode, setDarkMode, controls, register }),
-    [speed, darkMode, controls, register]
+    () => ({ speed, setSpeed, controls, register }),
+    [speed, controls, register]
   );
 
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;

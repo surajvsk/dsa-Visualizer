@@ -6,9 +6,9 @@ import { useVisualizerPlayer } from '../../hooks/useVisualizerPlayer';
 import VisualizerLayout, { Legend } from '../Layout/VisualizerLayout';
 
 const MODES = {
-  factorial: { label: 'Factorial', run: (n) => factorialSteps(n), code: CODE.factorial, max: 7 },
-  fibonacci: { label: 'Fibonacci', run: (n) => fibonacciSteps(n), code: CODE.fibonacci, max: 6 },
-  memo: { label: 'Fib + memo', run: (n) => fibonacciMemoSteps(n), code: CODE.fibMemo, max: 8 },
+  factorial: { label: 'Pehle: Factorial', run: (n) => factorialSteps(n), code: CODE.factorial, max: 6 },
+  fibonacci: { label: 'Phir: Fibonacci', run: (n) => fibonacciSteps(n), code: CODE.fibonacci, max: 5 },
+  memo: { label: 'Phir: yaad rakh ke', run: (n) => fibonacciMemoSteps(n), code: CODE.fibMemo, max: 7 },
 };
 
 export default function RecursionVisualizer() {
@@ -23,13 +23,12 @@ export default function RecursionVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Recursion"
-      subtitle="Each call waits on the stack until the base case returns. Watch frames push on the way down and pop on the way up."
+      topicId="recursion"
       code={meta.code}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap items-center gap-2">
+        <>
           {Object.entries(MODES).map(([id, m]) => (
             <button
               key={id}
@@ -40,23 +39,23 @@ export default function RecursionVisualizer() {
               {m.label}
             </button>
           ))}
-          <label className="text-xs text-slate-400">
-            n
+          <label className="text-sm font-semibold text-slate-600">
+            Kitna bada sawal (n)
             <input
               type="number"
               min={1}
               max={meta.max}
-              className="ml-2 w-16 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-slate-100"
+              className="ml-2 w-16 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={safeN}
               onChange={(e) => setN(Number(e.target.value))}
             />
           </label>
-        </div>
+        </>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-[1fr_220px]">
+      <div className="grid gap-6 lg:grid-cols-[1fr_200px]">
         <div className="panel min-h-[280px] p-6">
-          <p className="mb-3 text-[11px] font-bold uppercase tracking-wider text-purple-300">Call stack</p>
+          <p className="mb-3 text-sm font-extrabold text-purple-800">Waiting cards (call stack)</p>
           <div className="flex min-h-[200px] flex-col-reverse justify-start gap-2">
             <AnimatePresence>
               {(step.callStack ?? []).map((call) => (
@@ -66,32 +65,32 @@ export default function RecursionVisualizer() {
                   initial={{ opacity: 0, x: -24 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 24 }}
-                  className="rounded-xl border border-purple-400/40 bg-purple-500/15 px-4 py-3"
+                  className="rounded-2xl border-2 border-purple-200 bg-purple-50 px-4 py-3"
                 >
-                  <p className="font-mono text-sm font-semibold text-purple-100">
-                    {call.functionName}({call.args})
+                  <p className="text-base font-bold text-purple-950">
+                    {call.functionName}({call.args}) wait kar raha
                     {call.returning != null && (
-                      <span className="ml-2 text-emerald-300">→ {call.returning}</span>
+                      <span className="ml-2 text-emerald-700">→ jawab {call.returning}</span>
                     )}
                   </p>
                 </motion.div>
               ))}
             </AnimatePresence>
             {(step.callStack ?? []).length === 0 && (
-              <p className="text-sm text-slate-500">Stack empty.</p>
+              <p className="text-sm text-slate-500">Ab koi wait nahi kar raha.</p>
             )}
           </div>
         </div>
         <div className="panel p-5">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Result</p>
-          <p className="mt-2 font-mono text-3xl font-extrabold text-white">{step.result ?? '—'}</p>
-          {step.memo && (
+          <p className="text-sm font-extrabold text-slate-500">Aakhri jawab</p>
+          <p className="mt-2 text-4xl font-extrabold text-slate-900">{step.result ?? '—'}</p>
+          {step.memo && Object.keys(step.memo).length > 0 && (
             <>
-              <p className="mt-5 text-[11px] font-bold uppercase tracking-wider text-slate-500">Memo</p>
+              <p className="mt-5 text-sm font-extrabold text-slate-500">Copy (yaad)</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {Object.entries(step.memo).map(([k, v]) => (
-                  <span key={k} className="chip bg-white/10 text-slate-200">
-                    {k}:{v}
+                  <span key={k} className="chip bg-indigo-100 text-indigo-800">
+                    {k} = {v}
                   </span>
                 ))}
               </div>
@@ -101,8 +100,8 @@ export default function RecursionVisualizer() {
       </div>
       <Legend
         items={[
-          { label: 'Active frame', color: 'bg-purple-400' },
-          { label: 'Returning', color: 'bg-emerald-400' },
+          { label: 'Wait kar raha card', color: 'bg-purple-400' },
+          { label: 'Jawab mil gaya', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

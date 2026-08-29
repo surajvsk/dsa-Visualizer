@@ -8,7 +8,7 @@ import VisualizerLayout, { Legend } from '../Layout/VisualizerLayout';
 const RAW = [3, 8, 12, 17, 24, 31, 36, 44, 51, 63];
 
 export default function SearchingVisualizer() {
-  const [algo, setAlgo] = useState('binary');
+  const [algo, setAlgo] = useState('linear');
   const [target, setTarget] = useState(31);
 
   const steps = useMemo(
@@ -20,29 +20,28 @@ export default function SearchingVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Searching"
-      subtitle="Linear scan checks every item. Binary search halves a sorted array each step — O(log n)."
+      topicId="searching"
       code={algo === 'binary' ? CODE.binary : CODE.linear}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap items-center gap-2">
+        <>
           <button type="button" className={algo === 'linear' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('linear')}>
-            Linear
+            Seedha dhoondho (Linear)
           </button>
           <button type="button" className={algo === 'binary' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('binary')}>
-            Binary
+            Aadha kaato (Binary)
           </button>
-          <label className="text-xs text-slate-400">
-            Target
+          <label className="text-sm font-semibold text-slate-600">
+            Kya dhoondhna hai
             <input
               type="number"
-              className="ml-2 w-20 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-slate-100"
+              className="ml-2 w-20 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={target}
               onChange={(e) => setTarget(Number(e.target.value))}
             />
           </label>
-        </div>
+        </>
       }
     >
       <div className="panel overflow-x-auto p-6">
@@ -54,34 +53,35 @@ export default function SearchingVisualizer() {
                 ? idx >= step.low && idx <= step.high
                 : true;
             const found = step.found && isCheck;
-            let color = inWindow ? 'bg-indigo-500' : 'bg-slate-800 text-slate-500';
+            let color = inWindow ? 'bg-indigo-500 text-white' : 'bg-slate-200 text-slate-400';
             if (isCheck) color = 'bg-amber-400 text-slate-900';
-            if (found) color = 'bg-emerald-500';
+            if (found) color = 'bg-emerald-500 text-white';
 
             return (
               <motion.div
                 key={`${idx}-${value}`}
                 layout
-                className={`flex h-20 w-14 shrink-0 flex-col items-center justify-center rounded-xl text-sm font-bold ${color}`}
+                className={`flex h-20 w-14 shrink-0 flex-col items-center justify-center rounded-2xl text-base font-extrabold ${color}`}
               >
                 {value}
-                <span className="mt-1 text-[10px] font-medium opacity-70">{idx}</span>
+                <span className="mt-1 text-[10px] font-bold opacity-70">khana {idx}</span>
               </motion.div>
             );
           })}
         </div>
         {algo === 'binary' && (
-          <p className="mt-4 text-xs text-slate-400">
-            low = {step.low ?? '—'} · mid = {step.mid ?? '—'} · high = {step.high ?? '—'}
+          <p className="mt-4 text-sm font-semibold text-slate-600">
+            Bacha hua hissa: khana {step.low ?? '—'} se {step.high ?? '—'} tak
+            {step.mid != null ? ` · ab beech = ${step.mid}` : ''}
           </p>
         )}
       </div>
       <Legend
         items={[
-          { label: 'In range', color: 'bg-indigo-500' },
-          { label: 'Checking', color: 'bg-amber-400' },
-          { label: 'Found', color: 'bg-emerald-500' },
-          { label: 'Discarded', color: 'bg-slate-800' },
+          { label: 'Abhi is hisse mein ho sakta', color: 'bg-indigo-500' },
+          { label: 'Yahi box khol rahe', color: 'bg-amber-400' },
+          { label: 'Mil gaya', color: 'bg-emerald-500' },
+          { label: 'Fenk diya', color: 'bg-slate-300' },
         ]}
       />
     </VisualizerLayout>

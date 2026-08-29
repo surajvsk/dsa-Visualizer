@@ -12,25 +12,25 @@ export function linkedListInsertHeadSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `Insert ${value} at the head.`,
+      description: `${value} ko train ke sabse aage (head) jodna hai.`,
     },
   ];
   const fresh = { id: `n-new`, value, highlight: true, inserting: true };
   steps.push({
     nodes: [fresh, ...snapshot(nodes)],
     line: 1,
-    description: `Create a new node (${value}).`,
+    description: `Naya dabba banaya — usme ${value} hai.`,
   });
   steps.push({
     nodes: [{ ...fresh, inserting: false, highlight: true }, ...snapshot(nodes)],
     line: 2,
-    description: `Point the new node to the old head.`,
+    description: `Naye dabbe ka arrow purane pehle dabbe ko dikhata hai.`,
   });
   steps.push({
     nodes: [{ ...fresh, inserting: false, highlight: false }, ...snapshot(nodes)],
     done: true,
     line: 3,
-    description: `Head now points to ${value}.`,
+    description: `Ab head ${value} hai. Shuruat par jodna itna aasan isliye hai.`,
   });
   return steps;
 }
@@ -41,27 +41,27 @@ export function linkedListInsertTailSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `Insert ${value} at the tail.`,
+      description: `${value} ko last mein jodna hai. Pehle poori train chalne padegi.`,
     },
   ];
   for (let i = 0; i < nodes.length; i++) {
     steps.push({
       nodes: snapshot(nodes).map((n, idx) => ({ ...n, highlight: idx === i })),
       line: 2,
-      description: `Walk to node ${nodes[i].value}…`,
+      description: `${nodes[i].value} par aaye. Last dabba abhi nahi mila, aage badho.`,
     });
   }
   const fresh = { id: `n-new`, value, highlight: true, inserting: true };
   steps.push({
     nodes: [...snapshot(nodes), fresh],
     line: 4,
-    description: `Link last node → ${value}.`,
+    description: `Aakhri dabbe ka arrow ab ${value} ko dikhata hai.`,
   });
   steps.push({
     nodes: [...snapshot(nodes), { ...fresh, inserting: false, highlight: false }],
     done: true,
     line: 5,
-    description: `${value} is the new tail.`,
+    description: `${value} ab last dabba hai.`,
   });
   return steps;
 }
@@ -72,7 +72,7 @@ export function linkedListDeleteSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `Delete the first node with value ${value}.`,
+      description: `${value} wala dabba hataana hai. Pehle us tak chal ke jaao.`,
     },
   ];
   const idx = nodes.findIndex((n) => n.value === value);
@@ -81,7 +81,7 @@ export function linkedListDeleteSteps(values, value) {
       nodes: snapshot(nodes),
       done: true,
       line: 6,
-      description: `${value} was not found.`,
+      description: `${value} is train mein hai hi nahi.`,
     });
     return steps;
   }
@@ -89,7 +89,7 @@ export function linkedListDeleteSteps(values, value) {
     steps.push({
       nodes: snapshot(nodes).map((n, j) => ({ ...n, highlight: j === i })),
       line: 2,
-      description: i === idx ? `Found ${value} — unlink it.` : `Check ${nodes[i].value}…`,
+      description: i === idx ? `${value} mil gaya — is dabbe ko line se alag karo.` : `${nodes[i].value} ${value} nahi hai, aage dekho.`,
     });
   }
   const remaining = nodes.filter((_, i) => i !== idx);
@@ -97,7 +97,7 @@ export function linkedListDeleteSteps(values, value) {
     nodes: snapshot(remaining),
     done: true,
     line: 4,
-    description: `Removed ${value}. List reconnects around the gap.`,
+    description: `${value} nikal gaya. Pichla dabba seedha agle se jud gaya.`,
   });
   return steps;
 }
@@ -109,7 +109,7 @@ export function arrayInsertSteps(arr, index, value) {
       array: [...a],
       highlight: [],
       line: 0,
-      description: `Insert ${value} at index ${index}. Shift elements right.`,
+      description: `${value} ko khana ${index} mein daalna hai. Aage wale right ko sarakenge, jagah banane ke liye.`,
     },
   ];
   a.push(null);
@@ -119,7 +119,7 @@ export function arrayInsertSteps(arr, index, value) {
       array: [...a],
       highlight: [i, i - 1],
       line: 3,
-      description: `Shift index ${i - 1} → ${i} (${a[i]})`,
+      description: `${a[i]} ko ek khana right khiska diya (${i - 1} se ${i}).`,
     });
   }
   a[index] = value;
@@ -128,14 +128,14 @@ export function arrayInsertSteps(arr, index, value) {
     highlight: [index],
     swapped: true,
     line: 5,
-    description: `Write ${value} at index ${index}.`,
+    description: `Khali jagah mein ${value} baith gaya (khana ${index}).`,
   });
   steps.push({
     array: [...a],
     highlight: [index],
     done: true,
     line: 5,
-    description: 'Insert complete. Length increased by 1.',
+    description: 'Ho gaya. Array ab 1 lambi hai. Beech mein daalna isliye mehnga pada — sabko hataana pada.',
   });
   return steps;
 }
@@ -147,7 +147,7 @@ export function arrayDeleteSteps(arr, index) {
       array: [...a],
       highlight: [index],
       line: 0,
-      description: `Delete index ${index} (value ${a[index]}). Shift left to fill the gap.`,
+      description: `Khana ${index} (${a[index]}) nikalna hai. Gap band karne ke liye aage wale left aayenge.`,
     },
   ];
   const removed = a[index];
@@ -157,7 +157,7 @@ export function arrayDeleteSteps(arr, index) {
       array: [...a],
       highlight: [i, i + 1],
       line: 3,
-      description: `Shift index ${i + 1} → ${i}`,
+      description: `Agla number khana ${i} mein aa gaya, gap pat raha hai.`,
     });
   }
   a.pop();
@@ -166,7 +166,7 @@ export function arrayDeleteSteps(arr, index) {
     highlight: [],
     done: true,
     line: 6,
-    description: `Removed ${removed}. Length decreased by 1.`,
+    description: `${removed} nikal gaya. Array 1 chhoti ho gayi.`,
   });
   return steps;
 }
@@ -188,7 +188,7 @@ export function stackDemoSteps() {
     stack: [],
     op: null,
     line: 0,
-    description: 'Stack is LIFO — last in, first out.',
+    description: 'Stack khaali hai. Socho plates ki gaddi — nayi plate hamesha upar rakhti hai.',
   });
 
   for (const [op, value] of ops) {
@@ -199,7 +199,7 @@ export function stackDemoSteps() {
         op: 'push',
         value,
         line: 2,
-        description: `push(${value}) — new top is ${value}.`,
+        description: `${value} upar rakh di. Ab sabse upar yahi hai — nikalna hoga to pehle yahi uthegi.`,
       });
     } else {
       const popped = stack.pop();
@@ -208,7 +208,7 @@ export function stackDemoSteps() {
         op: 'pop',
         value: popped,
         line: 5,
-        description: `pop() → ${popped}. New top is ${stack[stack.length - 1] ?? 'empty'}.`,
+        description: `${popped} uth gayi (upar wali). Ab upar ${stack[stack.length - 1] ?? 'kuch nahi'}.`,
       });
     }
   }
@@ -218,7 +218,7 @@ export function stackDemoSteps() {
     op: null,
     done: true,
     line: 7,
-    description: 'Demo complete.',
+    description: 'Stack demo khatam. Jo last gaya, wahi pehle nikla.',
   });
   return steps;
 }
@@ -239,7 +239,7 @@ export function queueDemoSteps() {
     queue: [],
     op: null,
     line: 0,
-    description: 'Queue is FIFO — first in, first out.',
+    description: 'Queue khaali hai. Ticket line socho — peeche lagte ho, aage se nikalte ho.',
   });
 
   for (const [op, value] of ops) {
@@ -250,7 +250,7 @@ export function queueDemoSteps() {
         op: 'enqueue',
         value,
         line: 2,
-        description: `enqueue(${value}) — joins the back.`,
+        description: `${value} line ke peeche lag gaya.`,
       });
     } else {
       const removed = queue.shift();
@@ -259,7 +259,7 @@ export function queueDemoSteps() {
         op: 'dequeue',
         value: removed,
         line: 5,
-        description: `dequeue() → ${removed}. Front moves forward.`,
+        description: `${removed} aage se nikal gaya (jo pehle aaya tha).`,
       });
     }
   }
@@ -269,7 +269,7 @@ export function queueDemoSteps() {
     op: null,
     done: true,
     line: 7,
-    description: 'Demo complete.',
+    description: 'Queue demo khatam. Jo pehle line mein aaya, wahi pehle nikla.',
   });
   return steps;
 }

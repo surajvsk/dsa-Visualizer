@@ -20,34 +20,33 @@ export default function GraphVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Graphs"
-      subtitle="BFS explores level by level (queue). DFS dives deep first (stack). Same graph, different visit order."
+      topicId="graphs"
       code={algo === 'bfs' ? CODE.bfs : CODE.dfs}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap items-center gap-2">
+        <>
           <button type="button" className={algo === 'bfs' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('bfs')}>
-            BFS
+            Padosi-padosi (BFS)
           </button>
           <button type="button" className={algo === 'dfs' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('dfs')}>
-            DFS
+            Gehra raasta (DFS)
           </button>
-          <label className="text-xs text-slate-400">
-            Start
+          <label className="text-sm font-semibold text-slate-600">
+            Kahan se shuru
             <select
-              className="ml-2 rounded-lg border border-white/10 bg-ink-800 px-2 py-1 text-slate-100"
+              className="ml-2 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={start}
               onChange={(e) => setStart(e.target.value)}
             >
               {SAMPLE_GRAPH.nodes.map((n) => (
                 <option key={n.id} value={n.id}>
-                  {n.id}
+                  Shehar {n.id}
                 </option>
               ))}
             </select>
           </label>
-        </div>
+        </>
       }
     >
       <div className="panel p-4">
@@ -66,8 +65,8 @@ export default function GraphVisualizer() {
                     y1={a.y}
                     x2={b.x}
                     y2={b.y}
-                    stroke={lit ? '#34d399' : '#334155'}
-                    strokeWidth="2.5"
+                    stroke={lit ? '#059669' : '#cbd5e1'}
+                    strokeWidth="3"
                   />
                 );
               })
@@ -76,13 +75,14 @@ export default function GraphVisualizer() {
             const isVisiting = step.visiting === node.id;
             const isVisited = visited.has(node.id);
             const inFrontier = frontier.has(node.id);
-            const fill = isVisited ? '#10b981' : isVisiting ? '#f59e0b' : inFrontier ? '#6366f1' : '#1e293b';
+            const fill = isVisited ? '#10b981' : isVisiting ? '#f59e0b' : inFrontier ? '#6366f1' : '#e2e8f0';
+            const text = isVisited || isVisiting || inFrontier ? 'white' : '#334155';
             return (
               <g key={node.id}>
                 <motion.circle
                   cx={node.x}
                   cy={node.y}
-                  r="22"
+                  r="24"
                   fill={fill}
                   stroke="#94a3b8"
                   strokeWidth="1.5"
@@ -92,9 +92,9 @@ export default function GraphVisualizer() {
                   x={node.x}
                   y={node.y + 5}
                   textAnchor="middle"
-                  fill="white"
-                  fontSize="14"
-                  fontWeight="700"
+                  fill={text}
+                  fontSize="15"
+                  fontWeight="800"
                 >
                   {node.id}
                 </text>
@@ -103,20 +103,20 @@ export default function GraphVisualizer() {
           })}
         </svg>
       </div>
-      <div className="mt-4 flex flex-wrap gap-2 text-sm">
-        <span className="chip bg-white/10 text-slate-300">
-          {algo === 'bfs' ? 'Queue' : 'Stack'}: {(algo === 'bfs' ? step.queue : step.stack)?.join(', ') || 'empty'}
+      <div className="mt-4 flex flex-wrap gap-2 text-sm font-semibold">
+        <span className="chip bg-indigo-100 text-indigo-800">
+          {algo === 'bfs' ? 'Line' : 'Stack'}: {(algo === 'bfs' ? step.queue : step.stack)?.join(', ') || 'khaali'}
         </span>
-        <span className="chip bg-emerald-500/20 text-emerald-200">
-          Visited: {(step.visited ?? []).join(' → ') || '—'}
+        <span className="chip bg-emerald-100 text-emerald-800">
+          Dekh chuke: {(step.visited ?? []).join(' → ') || '—'}
         </span>
       </div>
       <Legend
         items={[
-          { label: 'Unseen', color: 'bg-slate-700' },
-          { label: 'In frontier', color: 'bg-indigo-500' },
-          { label: 'Visiting', color: 'bg-amber-400' },
-          { label: 'Visited', color: 'bg-emerald-500' },
+          { label: 'Abhi nahi gaye', color: 'bg-slate-300' },
+          { label: 'Agla ummeedwar', color: 'bg-indigo-500' },
+          { label: 'Abhi yahan', color: 'bg-amber-400' },
+          { label: 'Dekh chuke', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

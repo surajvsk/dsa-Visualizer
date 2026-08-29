@@ -6,15 +6,15 @@ export default function PlayPauseButton({ isPlaying, onPlay, onPause, disabled }
       type="button"
       disabled={disabled}
       onClick={isPlaying ? onPause : onPlay}
-      className="btn-primary min-w-[108px]"
+      className={`min-w-[128px] text-base ${isPlaying ? 'btn-ghost' : 'btn-primary'}`}
     >
       {isPlaying ? (
         <>
-          <Pause className="h-4 w-4" /> Pause
+          <Pause className="h-5 w-5" /> Ruko
         </>
       ) : (
         <>
-          <Play className="h-4 w-4" /> Play
+          <Play className="h-5 w-5" /> Chalao
         </>
       )}
     </button>

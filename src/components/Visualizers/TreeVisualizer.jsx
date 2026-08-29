@@ -19,24 +19,27 @@ export default function TreeVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Trees & BST"
-      subtitle="This BST is laid out in-order along x. Traversal order changes which node lights up next — not the shape of the tree."
+      topicId="trees"
       code={CODE[order]}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap gap-2">
-          {['inorder', 'preorder', 'postorder'].map((id) => (
+        <>
+          {[
+            ['inorder', 'Left → khud → right'],
+            ['preorder', 'Pehle khud'],
+            ['postorder', 'Last mein khud'],
+          ].map(([id, label]) => (
             <button
               key={id}
               type="button"
-              className={order === id ? 'btn-primary capitalize' : 'btn-ghost capitalize'}
+              className={order === id ? 'btn-primary' : 'btn-ghost'}
               onClick={() => setOrder(id)}
             >
-              {id}
+              {label}
             </button>
           ))}
-        </div>
+        </>
       }
     >
       <div className="panel overflow-x-auto p-4">
@@ -52,21 +55,22 @@ export default function TreeVisualizer() {
                 y1={a.y}
                 x2={b.x}
                 y2={b.y}
-                stroke={active ? '#34d399' : '#334155'}
-                strokeWidth="2"
+                stroke={active ? '#059669' : '#cbd5e1'}
+                strokeWidth="3"
               />
             );
           })}
           {layout.nodes.map((node) => {
             const isVisiting = step.visiting === node.id || step.highlight === node.id;
             const isVisited = visited.has(node.id);
-            const fill = isVisited ? '#10b981' : isVisiting ? '#f59e0b' : '#334155';
+            const fill = isVisited ? '#10b981' : isVisiting ? '#f59e0b' : '#e2e8f0';
+            const text = isVisited || isVisiting ? 'white' : '#334155';
             return (
               <g key={node.id}>
                 <motion.circle
                   cx={node.x}
                   cy={node.y}
-                  r="20"
+                  r="22"
                   fill={fill}
                   stroke="#94a3b8"
                   strokeWidth="1.5"
@@ -76,9 +80,9 @@ export default function TreeVisualizer() {
                   x={node.x}
                   y={node.y + 5}
                   textAnchor="middle"
-                  fill="white"
-                  fontSize="13"
-                  fontWeight="700"
+                  fill={text}
+                  fontSize="14"
+                  fontWeight="800"
                 >
                   {node.value}
                 </text>
@@ -87,14 +91,14 @@ export default function TreeVisualizer() {
           })}
         </svg>
       </div>
-      <p className="mt-3 font-mono text-sm text-slate-300">
-        Order: {(step.visited ?? []).join(' → ') || '—'}
+      <p className="mt-3 text-base font-bold text-slate-700">
+        Ab tak likha: {(step.visited ?? []).join(' → ') || 'abhi kuch nahi'}
       </p>
       <Legend
         items={[
-          { label: 'Unvisited', color: 'bg-slate-600' },
-          { label: 'Visiting', color: 'bg-amber-400' },
-          { label: 'Visited', color: 'bg-emerald-500' },
+          { label: 'Abhi nahi dekha', color: 'bg-slate-300' },
+          { label: 'Yahan hain', color: 'bg-amber-400' },
+          { label: 'Likh chuke', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

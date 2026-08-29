@@ -7,7 +7,7 @@ export function linearSearchSteps(arr, target) {
     checking: null,
     found: false,
     line: 0,
-    description: `Linear Search for ${target} — scan left to right.`,
+    description: `${target} dhoondhna hai. Seedha pehle box se last tak dekhenge — koi shortcut nahi.`,
   });
 
   for (let i = 0; i < a.length; i++) {
@@ -16,7 +16,10 @@ export function linearSearchSteps(arr, target) {
       checking: i,
       found: false,
       line: 2,
-      description: `Check index ${i}: ${a[i]} ${a[i] === target ? '==' : '≠'} ${target}`,
+      description:
+        a[i] === target
+          ? `Box ${i} mein ${a[i]} hai — yahi toh chahiye tha!`
+          : `Box ${i} mein ${a[i]} hai, ${target} nahi. Agla box dekho.`,
     });
     if (a[i] === target) {
       steps.push({
@@ -25,7 +28,7 @@ export function linearSearchSteps(arr, target) {
         found: true,
         done: true,
         line: 3,
-        description: `Found ${target} at index ${i}.`,
+        description: `Mil gaya! ${target} jagah ${i} par hai. Itne boxes check kiye: ${i + 1}.`,
       });
       return steps;
     }
@@ -37,7 +40,7 @@ export function linearSearchSteps(arr, target) {
     found: false,
     done: true,
     line: 6,
-    description: `${target} is not in the array.`,
+    description: `${target} is list mein hai hi nahi. Poori line dekh li.`,
   });
   return steps;
 }
@@ -55,7 +58,7 @@ export function binarySearchSteps(arr, target) {
     mid: null,
     found: false,
     line: 0,
-    description: `Binary Search for ${target} on a sorted array.`,
+    description: `List pehle se chhote-se-bade mein hai. ${target} dhoondhne ke liye hamesha beech wala box kholenge.`,
   });
 
   while (lo <= hi) {
@@ -67,7 +70,7 @@ export function binarySearchSteps(arr, target) {
       mid,
       found: false,
       line: 3,
-      description: `mid = ${mid}, value = ${a[mid]}`,
+      description: `Beech ka box ${mid} — usme ${a[mid]} hai. Ye ${target} se chhota, bada, ya barabar?`,
     });
 
     if (a[mid] === target) {
@@ -79,7 +82,7 @@ export function binarySearchSteps(arr, target) {
         found: true,
         done: true,
         line: 5,
-        description: `Found ${target} at index ${mid}.`,
+        description: `Bilkul barabar! ${target} jagah ${mid} par mil gaya. Baaki copy padhne ki zarurat nahi.`,
       });
       return steps;
     }
@@ -93,7 +96,7 @@ export function binarySearchSteps(arr, target) {
         mid,
         found: false,
         line: 7,
-        description: `${a[mid]} < ${target} — search the right half.`,
+        description: `${a[mid]} chhota hai ${target} se. Left waali aadhi list fenk do — wahan nahi hoga.`,
       });
     } else {
       hi = mid - 1;
@@ -104,7 +107,7 @@ export function binarySearchSteps(arr, target) {
         mid,
         found: false,
         line: 9,
-        description: `${a[mid]} > ${target} — search the left half.`,
+        description: `${a[mid]} bada hai ${target} se. Right waali aadhi list fenk do.`,
       });
     }
   }
@@ -117,7 +120,7 @@ export function binarySearchSteps(arr, target) {
     found: false,
     done: true,
     line: 11,
-    description: `${target} is not in the array.`,
+    description: `${target} is list mein nahi hai. Aadhi-aadhi kaat-kaat ke poora search khatam.`,
   });
   return steps;
 }

@@ -1,8 +1,10 @@
 import { lazy, Suspense, useState } from 'react';
 import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { PlayerProvider, usePlayer } from './context/PlayerContext';
+import { LearnProvider, useLearn } from './context/LearnContext';
 import Sidebar from './components/Layout/Sidebar';
 import TopBar from './components/Layout/TopBar';
+import WelcomeScreen from './components/Layout/WelcomeScreen';
 import SpeedSlider from './components/Controls/SpeedSlider';
 import PlayPauseButton from './components/Controls/PlayPauseButton';
 import { TOPICS } from './data/topics';
@@ -32,7 +34,7 @@ const VISUALIZERS = {
 function MobilePlayer() {
   const { speed, setSpeed, controls } = usePlayer();
   return (
-    <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 border-t border-white/10 bg-ink-900 px-3 py-2 md:hidden">
+    <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 border-t border-slate-200 bg-paper px-3 py-2 md:hidden">
       <SpeedSlider speed={speed} onChange={setSpeed} />
       <PlayPauseButton
         isPlaying={!!controls?.isPlaying}
@@ -54,14 +56,18 @@ function MobilePlayer() {
 }
 
 function Shell() {
-  const [topic, setTopic] = useState('sorting');
+  const { topic, setTopic, welcome, startLearning } = useLearn();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const Visualizer = VISUALIZERS[topic] ?? SortingVisualizer;
+  const Visualizer = VISUALIZERS[topic] ?? ArrayVisualizer;
   const meta = TOPICS.find((t) => t.id === topic);
 
+  if (welcome) {
+    return <WelcomeScreen onStart={startLearning} />;
+  }
+
   return (
-    <div className="flex h-full flex-col bg-ink-950">
-      <TopBar onMenu={() => setSidebarOpen(true)} title={meta?.label ?? 'Sorting'} />
+    <div className="flex h-full flex-col bg-cream">
+      <TopBar onMenu={() => setSidebarOpen(true)} title={meta?.label ?? 'Array'} />
       <div className="flex min-h-0 flex-1">
         <Sidebar
           topic={topic}
@@ -72,8 +78,8 @@ function Shell() {
         <main className="flex min-w-0 flex-1 flex-col">
           <Suspense
             fallback={
-              <div className="flex flex-1 items-center justify-center text-sm text-slate-400">
-                Loading visualizer…
+              <div className="flex flex-1 items-center justify-center text-slate-500">
+                Picture taiyar ho rahi hai…
               </div>
             }
           >
@@ -88,8 +94,10 @@ function Shell() {
 
 export default function App() {
   return (
-    <PlayerProvider>
-      <Shell />
-    </PlayerProvider>
+    <LearnProvider>
+      <PlayerProvider>
+        <Shell />
+      </PlayerProvider>
+    </LearnProvider>
   );
 }

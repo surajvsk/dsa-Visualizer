@@ -1,9 +1,9 @@
 export default function StepCounter({ current, total, onSeek }) {
   const max = Math.max(total - 1, 0);
   return (
-    <div className="flex items-center gap-2 text-xs text-slate-400">
-      <span className="tabular-nums font-medium text-slate-300">
-        {total === 0 ? '0 / 0' : `${current + 1} / ${total}`}
+    <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
+      <span className="tabular-nums">
+        kadam {total === 0 ? '0' : current + 1} / {total}
       </span>
       <input
         type="range"
@@ -12,7 +12,7 @@ export default function StepCounter({ current, total, onSeek }) {
         value={Math.min(current, max)}
         onChange={(e) => onSeek?.(Number(e.target.value))}
         disabled={total <= 1}
-        className="h-1.5 w-28 accent-cyan-400 cursor-pointer disabled:opacity-30"
+        className="h-2 w-24 cursor-pointer accent-indigo-600 disabled:opacity-30"
       />
     </div>
   );

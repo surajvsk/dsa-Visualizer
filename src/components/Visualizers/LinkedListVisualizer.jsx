@@ -27,17 +27,16 @@ export default function LinkedListVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Linked List"
-      subtitle="Nodes live anywhere in memory and point to the next. Insert at head is O(1); finding a value is O(n)."
+      topicId="linkedlist"
       code={code}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap items-center gap-2">
+        <>
           {[
-            ['head', 'Insert head'],
-            ['tail', 'Insert tail'],
-            ['delete', 'Delete'],
+            ['head', 'Aage jodo'],
+            ['tail', 'Peeche jodo'],
+            ['delete', 'Dabba hatao'],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -48,21 +47,21 @@ export default function LinkedListVisualizer() {
               {label}
             </button>
           ))}
-          <label className="text-xs text-slate-400">
-            Value
+          <label className="text-sm font-semibold text-slate-600">
+            Number
             <input
               type="number"
-              className="ml-2 w-20 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-slate-100"
+              className="ml-2 w-20 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={value}
               onChange={(e) => setValue(Number(e.target.value))}
             />
           </label>
-        </div>
+        </>
       }
     >
       <div className="panel overflow-x-auto p-8">
         <div className="flex items-center gap-2">
-          <span className="mr-2 text-xs font-bold uppercase tracking-wider text-teal-400">Head</span>
+          <span className="mr-1 text-sm font-extrabold text-teal-700">Shuruat →</span>
           <AnimatePresence initial={false}>
             {(step.nodes ?? []).map((node, i) => (
               <motion.div
@@ -74,29 +73,29 @@ export default function LinkedListVisualizer() {
                 className="flex items-center gap-2"
               >
                 <div
-                  className={`flex min-w-[72px] items-center justify-center rounded-xl border-2 px-4 py-3 text-lg font-bold ${
+                  className={`flex min-w-[72px] flex-col items-center justify-center rounded-2xl border-2 px-4 py-3 text-lg font-extrabold ${
                     node.highlight
-                      ? 'border-amber-400 bg-amber-400/15 text-amber-200'
-                      : 'border-teal-400/70 bg-teal-400/10 text-teal-100'
+                      ? 'border-amber-400 bg-amber-100 text-amber-900'
+                      : 'border-teal-400 bg-teal-50 text-teal-900'
                   }`}
                 >
                   {node.value}
                 </div>
                 {i < step.nodes.length - 1 && (
-                  <motion.div layout className="text-2xl text-teal-300">
+                  <motion.div layout className="text-2xl font-bold text-teal-600">
                     →
                   </motion.div>
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
-          <span className="ml-2 text-sm text-slate-500">null</span>
+          <span className="ml-2 text-sm font-semibold text-slate-400">khatam</span>
         </div>
       </div>
       <Legend
         items={[
-          { label: 'Node', color: 'bg-teal-400' },
-          { label: 'Active', color: 'bg-amber-400' },
+          { label: 'Dabba', color: 'bg-teal-400' },
+          { label: 'Abhi is par nazar', color: 'bg-amber-400' },
         ]}
       />
     </VisualizerLayout>

@@ -16,7 +16,7 @@ export default function ArrayVisualizer() {
   const steps = useMemo(() => {
     const idx = Math.max(0, Math.min(index, mode === 'insert' ? BASE.length : BASE.length - 1));
     return mode === 'insert' ? arrayInsertSteps(BASE, idx, value) : arrayDeleteSteps(BASE, idx);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // run forces a fresh step list after "Phir se taiyar"
   }, [mode, index, value, run]);
 
   const { currentStep } = useVisualizerPlayer(steps);
@@ -25,24 +25,23 @@ export default function ArrayVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Arrays"
-      subtitle="Arrays store items in contiguous memory. Insert and delete must shift neighbors — that's why they are O(n)."
+      topicId="arrays"
       code={mode === 'insert' ? CODE.arrayInsert : CODE.arrayDelete}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex flex-wrap items-center gap-2">
+        <>
           <button type="button" className={mode === 'insert' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('insert')}>
-            Insert
+            Beech mein daalo
           </button>
           <button type="button" className={mode === 'delete' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('delete')}>
-            Delete
+            Nikaalo
           </button>
-          <label className="text-xs text-slate-400">
-            Index
+          <label className="text-sm font-semibold text-slate-600">
+            Kaunsa khana
             <input
               type="number"
-              className="ml-2 w-16 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-slate-100"
+              className="ml-2 w-16 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={index}
               min={0}
               max={mode === 'insert' ? BASE.length : BASE.length - 1}
@@ -50,26 +49,27 @@ export default function ArrayVisualizer() {
             />
           </label>
           {mode === 'insert' && (
-            <label className="text-xs text-slate-400">
-              Value
+            <label className="text-sm font-semibold text-slate-600">
+              Kaunsa number
               <input
                 type="number"
-                className="ml-2 w-16 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-slate-100"
+                className="ml-2 w-16 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
                 value={value}
                 onChange={(e) => setValue(Number(e.target.value))}
               />
             </label>
           )}
           <button type="button" className="btn-ghost" onClick={() => setRun((r) => r + 1)}>
-            Rebuild steps
+            Phir se taiyar
           </button>
-        </div>
+        </>
       }
     >
       <div className="panel overflow-x-auto p-6">
-        <div className="mb-3 flex gap-2 font-mono text-[11px] text-slate-500">
+        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">Khana number (index)</p>
+        <div className="mb-2 flex gap-2 text-center text-sm font-bold text-slate-500">
           {step.array.map((_, i) => (
-            <span key={`i-${i}`} className="w-16 text-center">
+            <span key={`i-${i}`} className="w-16">
               {i}
             </span>
           ))}
@@ -79,14 +79,12 @@ export default function ArrayVisualizer() {
             <motion.div
               key={`${i}-${v}`}
               layout
-              initial={{ scale: 0.9, opacity: 0.6 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className={`flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl border text-lg font-bold ${
+              className={`flex h-[4.5rem] w-16 shrink-0 flex-col items-center justify-center rounded-2xl border-2 text-xl font-extrabold ${
                 v == null
-                  ? 'border-dashed border-slate-600 text-slate-600'
+                  ? 'border-dashed border-slate-300 text-slate-300'
                   : highlight.has(i)
-                    ? 'border-amber-400 bg-amber-400/20 text-amber-200'
-                    : 'border-white/10 bg-white/5 text-white'
+                    ? 'border-amber-400 bg-amber-100 text-amber-900'
+                    : 'border-slate-200 bg-slate-50 text-slate-800'
               }`}
             >
               {v ?? '·'}
@@ -96,8 +94,8 @@ export default function ArrayVisualizer() {
       </div>
       <Legend
         items={[
-          { label: 'Cell', color: 'bg-white/40' },
-          { label: 'Active / shifting', color: 'bg-amber-400' },
+          { label: 'Saadi khana', color: 'bg-slate-300' },
+          { label: 'Abhi yahan kaam ho raha', color: 'bg-amber-400' },
         ]}
       />
     </VisualizerLayout>

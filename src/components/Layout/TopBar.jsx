@@ -8,27 +8,22 @@ export default function TopBar({ onMenu, title }) {
   const { speed, setSpeed, controls } = usePlayer();
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-3 border-b border-white/10 bg-ink-900/80 px-3 backdrop-blur-md md:px-5">
-      <button
-        type="button"
-        onClick={onMenu}
-        className="btn-ghost px-2.5 lg:hidden"
-        aria-label="Open topics"
-      >
-        <span className="text-lg leading-none">☰</span>
+    <header className="flex h-[4.25rem] shrink-0 items-center gap-3 border-b border-slate-200 bg-paper/90 px-3 backdrop-blur-md md:px-5">
+      <button type="button" onClick={onMenu} className="btn-ghost px-2.5 lg:hidden" aria-label="Topics">
+        ☰
       </button>
 
-      <div className="flex items-center gap-2.5 min-w-0">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-[11px] font-extrabold">
+      <div className="flex min-w-0 items-center gap-2.5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-[10px] font-extrabold text-white">
           DSA
         </div>
-        <div className="min-w-0 hidden sm:block">
-          <p className="truncate text-sm font-bold tracking-tight">Visualizer</p>
-          <p className="truncate text-[11px] text-slate-400">{title}</p>
+        <div className="hidden min-w-0 sm:block">
+          <p className="truncate text-sm font-extrabold text-slate-900">Picture se seekho</p>
+          <p className="truncate text-xs text-slate-500">{title}</p>
         </div>
       </div>
 
-      <div className="mx-auto hidden items-center gap-3 md:flex">
+      <div className="mx-auto hidden items-center gap-2 md:flex">
         <SpeedSlider speed={speed} onChange={setSpeed} />
         <PlayPauseButton
           isPlaying={!!controls?.isPlaying}
@@ -37,13 +32,13 @@ export default function TopBar({ onMenu, title }) {
           disabled={!controls}
         />
         <button type="button" className="btn-ghost" onClick={() => controls?.prev()} disabled={!controls}>
-          <ChevronLeft className="h-4 w-4" /> Prev
+          <ChevronLeft className="h-4 w-4" /> Pehle
         </button>
         <button type="button" className="btn-ghost" onClick={() => controls?.next()} disabled={!controls}>
-          Next <ChevronRight className="h-4 w-4" />
+          Agla <ChevronRight className="h-4 w-4" />
         </button>
         <button type="button" className="btn-ghost" onClick={() => controls?.reset()} disabled={!controls}>
-          <RotateCcw className="h-4 w-4" /> Reset
+          <RotateCcw className="h-4 w-4" /> Phir se
         </button>
       </div>
 

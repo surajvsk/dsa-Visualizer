@@ -6,18 +6,19 @@ export default function Sidebar({ topic, onSelect, open, onClose }) {
       {open && (
         <button
           type="button"
-          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
-          aria-label="Close sidebar"
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          aria-label="Close"
           onClick={onClose}
         />
       )}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-white/10 bg-ink-900 pt-16 transition-transform lg:static lg:z-0 lg:translate-x-0 lg:pt-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col border-r border-slate-200 bg-paper pt-16 transition-transform lg:static lg:z-0 lg:translate-x-0 lg:pt-0 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="px-4 pb-3 pt-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">Topics</p>
+        <div className="px-4 pb-2 pt-4">
+          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Yahan se shuru</p>
+          <p className="mt-1 text-sm text-slate-500">Upar se neeche, aasaan se mushkil</p>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-6 scrollbar-thin">
           {TOPICS.map((item) => {
@@ -31,16 +32,27 @@ export default function Sidebar({ topic, onSelect, open, onClose }) {
                   onSelect(item.id);
                   onClose();
                 }}
-                className={`flex w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition ${
+                className={`flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition ${
                   active
-                    ? 'bg-indigo-600/20 text-white ring-1 ring-indigo-400/40'
-                    : 'text-slate-300 hover:bg-white/5'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                    : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
-                <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${active ? 'text-indigo-300' : 'text-slate-500'}`} />
-                <span>
-                  <span className="block text-sm font-semibold">{item.label}</span>
-                  <span className="block text-[11px] text-slate-500">{item.hint}</span>
+                <span
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-extrabold ${
+                    active ? 'bg-white/20' : 'bg-slate-200 text-slate-600'
+                  }`}
+                >
+                  {item.step}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-center gap-2 text-sm font-bold">
+                    <Icon className="h-4 w-4 shrink-0 opacity-80" />
+                    {item.label}
+                  </span>
+                  <span className={`block text-xs ${active ? 'text-indigo-100' : 'text-slate-500'}`}>
+                    {item.hint}
+                  </span>
                 </span>
               </button>
             );

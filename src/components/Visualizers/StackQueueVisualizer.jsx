@@ -13,25 +13,24 @@ export default function StackQueueVisualizer() {
 
   return (
     <VisualizerLayout
-      title="Stack & Queue"
-      subtitle="A stack is LIFO (plates). A queue is FIFO (a line). Same items, opposite access rules."
+      topicId="stackqueue"
       code={mode === 'stack' ? CODE.stack : CODE.queue}
       currentLine={step.line ?? 0}
       description={step.description}
       extra={
-        <div className="flex gap-2">
+        <>
           <button type="button" className={mode === 'stack' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('stack')}>
-            Stack
+            Plates (Stack)
           </button>
           <button type="button" className={mode === 'queue' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('queue')}>
-            Queue
+            Ticket line (Queue)
           </button>
-        </div>
+        </>
       }
     >
       {mode === 'stack' ? (
-        <div className="panel mx-auto flex min-h-[320px] w-full max-w-xs flex-col-reverse items-center justify-start gap-2 p-6">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Bottom</p>
+        <div className="panel mx-auto flex min-h-[340px] w-full max-w-sm flex-col-reverse items-center justify-start gap-2 p-6">
+          <p className="text-sm font-bold text-slate-400">Neeche — yahan se nahi nikalta</p>
           <AnimatePresence>
             {(step.stack ?? []).map((v, i) => (
               <motion.div
@@ -40,23 +39,26 @@ export default function StackQueueVisualizer() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, x: 24 }}
-                className={`flex h-12 w-40 items-center justify-center rounded-xl border text-lg font-bold ${
+                className={`flex h-14 w-48 items-center justify-center rounded-2xl border-2 text-xl font-extrabold ${
                   i === (step.stack?.length ?? 0) - 1
-                    ? 'border-violet-400 bg-violet-500/20 text-violet-100'
-                    : 'border-white/10 bg-white/5'
+                    ? 'border-violet-400 bg-violet-100 text-violet-900'
+                    : 'border-slate-200 bg-slate-50 text-slate-700'
                 }`}
               >
                 {v}
+                {i === (step.stack?.length ?? 0) - 1 && (
+                  <span className="ml-2 text-xs font-bold text-violet-600">upar</span>
+                )}
               </motion.div>
             ))}
           </AnimatePresence>
-          <p className="text-[11px] font-bold uppercase tracking-wider text-violet-300">Top</p>
+          <p className="text-sm font-extrabold text-violet-700">Upar — yahi uthati hai</p>
         </div>
       ) : (
         <div className="panel overflow-x-auto p-8">
-          <div className="mb-3 flex justify-between text-[11px] font-bold uppercase tracking-wider text-slate-500">
-            <span>Front</span>
-            <span>Back</span>
+          <div className="mb-3 flex justify-between text-sm font-extrabold text-slate-500">
+            <span>Aage (niklega)</span>
+            <span>Peeche (lagega)</span>
           </div>
           <div className="flex min-h-[88px] items-center gap-2">
             <AnimatePresence>
@@ -67,8 +69,8 @@ export default function StackQueueVisualizer() {
                   initial={{ opacity: 0, scale: 0.7 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, x: -30 }}
-                  className={`flex h-16 w-16 items-center justify-center rounded-xl border text-lg font-bold ${
-                    i === 0 ? 'border-sky-400 bg-sky-500/20 text-sky-100' : 'border-white/10 bg-white/5'
+                  className={`flex h-16 w-16 items-center justify-center rounded-2xl border-2 text-lg font-extrabold ${
+                    i === 0 ? 'border-sky-400 bg-sky-100 text-sky-900' : 'border-slate-200 bg-slate-50 text-slate-700'
                   }`}
                 >
                   {v}
@@ -82,12 +84,12 @@ export default function StackQueueVisualizer() {
         items={
           mode === 'stack'
             ? [
-                { label: 'Below top', color: 'bg-white/40' },
-                { label: 'Top', color: 'bg-violet-400' },
+                { label: 'Neeche dabi', color: 'bg-slate-300' },
+                { label: 'Upar wali plate', color: 'bg-violet-400' },
               ]
             : [
-                { label: 'Waiting', color: 'bg-white/40' },
-                { label: 'Front', color: 'bg-sky-400' },
+                { label: 'Line mein wait', color: 'bg-slate-300' },
+                { label: 'Jo ab nikalega', color: 'bg-sky-400' },
               ]
         }
       />
