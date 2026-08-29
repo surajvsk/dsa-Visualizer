@@ -25,10 +25,10 @@ export default function DPVisualizer() {
       extra={
         <>
           <button type="button" className={mode === 'fib' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('fib')}>
-            Fibonacci copy
+            Fibonacci notebook
           </button>
           <button type="button" className={mode === 'lcs' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('lcs')}>
-            Do strings ka common hissa
+            Common letters in two words
           </button>
           {mode === 'fib' && (
             <label className="text-sm font-semibold text-slate-600">
@@ -64,7 +64,7 @@ export default function DPVisualizer() {
                         : 'border-slate-200 bg-slate-50 text-slate-800'
                   }`}
                 >
-                  <span className="text-[10px] font-bold text-slate-500">sawaal {i}</span>
+      <span className="text-[10px] font-bold text-slate-500">cell {i}</span>
                   {v == null ? '·' : v}
                 </motion.div>
               );
@@ -116,9 +116,9 @@ export default function DPVisualizer() {
       )}
       <Legend
         items={[
-          { label: 'Abhi yeh khana bhar rahe', color: 'bg-amber-400' },
-          { label: 'Match / jawab', color: 'bg-emerald-500' },
-          { label: 'Inse hisaab liya', color: 'bg-sky-400' },
+          { label: 'Filling this cell', color: 'bg-amber-400' },
+          { label: 'Match / answer', color: 'bg-emerald-500' },
+          { label: 'Used these cells', color: 'bg-sky-400' },
         ]}
       />
     </VisualizerLayout>

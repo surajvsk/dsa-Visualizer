@@ -1,14 +1,15 @@
-import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { usePlayer } from '../../context/PlayerContext';
+import { stopSpeech } from '../../lib/speech';
 import PlayPauseButton from '../Controls/PlayPauseButton';
 import SpeedSlider from '../Controls/SpeedSlider';
 import StepCounter from '../Controls/StepCounter';
 
 export default function TopBar({ onMenu, title }) {
-  const { speed, setSpeed, controls } = usePlayer();
+  const { speed, setSpeed, controls, voiceOn, setVoiceOn } = usePlayer();
 
   return (
-    <header className="flex h-[4.25rem] shrink-0 items-center gap-3 border-b border-slate-200 bg-paper/90 px-3 backdrop-blur-md md:px-5">
+    <header className="flex h-[4.25rem] shrink-0 items-center gap-3 border-b border-slate-200 bg-[#fffdf8]/90 px-3 backdrop-blur-md md:px-5">
       <button type="button" onClick={onMenu} className="btn-ghost px-2.5 lg:hidden" aria-label="Topics">
         ☰
       </button>
@@ -18,7 +19,7 @@ export default function TopBar({ onMenu, title }) {
           DSA
         </div>
         <div className="hidden min-w-0 sm:block">
-          <p className="truncate text-sm font-extrabold text-slate-900">Picture se seekho</p>
+          <p className="truncate text-sm font-extrabold text-slate-900">Learn by watching</p>
           <p className="truncate text-xs text-slate-500">{title}</p>
         </div>
       </div>
@@ -32,13 +33,25 @@ export default function TopBar({ onMenu, title }) {
           disabled={!controls}
         />
         <button type="button" className="btn-ghost" onClick={() => controls?.prev()} disabled={!controls}>
-          <ChevronLeft className="h-4 w-4" /> Pehle
+          <ChevronLeft className="h-4 w-4" /> Prev
         </button>
         <button type="button" className="btn-ghost" onClick={() => controls?.next()} disabled={!controls}>
-          Agla <ChevronRight className="h-4 w-4" />
+          Next <ChevronRight className="h-4 w-4" />
         </button>
         <button type="button" className="btn-ghost" onClick={() => controls?.reset()} disabled={!controls}>
-          <RotateCcw className="h-4 w-4" /> Phir se
+          <RotateCcw className="h-4 w-4" /> Reset
+        </button>
+        <button
+          type="button"
+          className={voiceOn ? 'btn-primary' : 'btn-ghost'}
+          onClick={() => {
+            if (voiceOn) stopSpeech();
+            setVoiceOn(!voiceOn);
+          }}
+          title={voiceOn ? 'Turn voice off' : 'Turn voice on'}
+        >
+          {voiceOn ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+          {voiceOn ? 'Voice on' : 'Voice off'}
         </button>
       </div>
 

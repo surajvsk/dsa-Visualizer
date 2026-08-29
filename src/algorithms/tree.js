@@ -56,10 +56,10 @@ export function traversalSteps(root, order = 'inorder') {
       line: phase === 'visit' ? 3 : phase === 'left' ? 1 : 5,
       description:
         phase === 'visit'
-          ? `Ab ${node.value} ko likh lo — yahi “visit” hai.`
+          ? `Write down ${node.value}. This is a visit.`
           : phase === 'left'
-            ? `${node.value} se left child ki taraf jao.`
-            : `${node.value} se right child ki taraf jao.`,
+            ? `From ${node.value}, go to the left child.`
+            : `From ${node.value}, go to the right child.`,
     });
     if (phase === 'visit') visited.push(node.value);
     stack.pop();
@@ -100,10 +100,10 @@ export function traversalSteps(root, order = 'inorder') {
     line: 0,
     description:
       order === 'inorder'
-        ? 'Inorder: pehle left, phir khud, phir right. Numbers sorted nikalne chahiye.'
+        ? 'Inorder: left first, then me, then right. The numbers should come out sorted.'
         : order === 'preorder'
-          ? 'Preorder: pehle khud, phir left, phir right. Jaise tree copy karna.'
-          : 'Postorder: pehle dono bacche, last mein khud.',
+          ? 'Preorder: visit me first, then left, then right. Like copying the tree.'
+          : 'Postorder: both children first, me last.',
   });
 
   if (order === 'preorder') preorder(root);
@@ -117,7 +117,7 @@ export function traversalSteps(root, order = 'inorder') {
     callStack: [],
     done: true,
     line: 6,
-    description: `Poora ghum liya. Order: ${visited.join(' → ')}`,
+    description: `Walk finished. Order: ${visited.join(' then ')}`,
   });
   return steps;
 }

@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from 'react';
 import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { PlayerProvider, usePlayer } from './context/PlayerContext';
 import { LearnProvider, useLearn } from './context/LearnContext';
+import { stopSpeech } from './lib/speech';
 import Sidebar from './components/Layout/Sidebar';
 import TopBar from './components/Layout/TopBar';
 import WelcomeScreen from './components/Layout/WelcomeScreen';
@@ -32,9 +33,9 @@ const VISUALIZERS = {
 };
 
 function MobilePlayer() {
-  const { speed, setSpeed, controls } = usePlayer();
+  const { speed, setSpeed, controls, voiceOn, setVoiceOn } = usePlayer();
   return (
-    <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 border-t border-slate-200 bg-paper px-3 py-2 md:hidden">
+    <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 border-t border-slate-200 bg-[#fffdf8] px-3 py-2 md:hidden">
       <SpeedSlider speed={speed} onChange={setSpeed} />
       <PlayPauseButton
         isPlaying={!!controls?.isPlaying}
@@ -51,6 +52,16 @@ function MobilePlayer() {
       <button type="button" className="btn-ghost px-2" onClick={() => controls?.reset()}>
         <RotateCcw className="h-4 w-4" />
       </button>
+      <button
+        type="button"
+        className={voiceOn ? 'btn-primary px-2' : 'btn-ghost px-2'}
+        onClick={() => {
+          if (voiceOn) stopSpeech();
+          setVoiceOn(!voiceOn);
+        }}
+      >
+        {voiceOn ? 'Voice' : 'Mute'}
+      </button>
     </div>
   );
 }
@@ -66,7 +77,7 @@ function Shell() {
   }
 
   return (
-    <div className="flex h-full flex-col bg-cream">
+    <div className="flex h-full flex-col bg-[#f6f1e8]">
       <TopBar onMenu={() => setSidebarOpen(true)} title={meta?.label ?? 'Array'} />
       <div className="flex min-h-0 flex-1">
         <Sidebar
@@ -79,7 +90,7 @@ function Shell() {
           <Suspense
             fallback={
               <div className="flex flex-1 items-center justify-center text-slate-500">
-                Picture taiyar ho rahi hai…
+                Loading the picture…
               </div>
             }
           >

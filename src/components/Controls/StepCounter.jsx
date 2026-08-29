@@ -3,7 +3,7 @@ export default function StepCounter({ current, total, onSeek }) {
   return (
     <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
       <span className="tabular-nums">
-        kadam {total === 0 ? '0' : current + 1} / {total}
+        step {total === 0 ? '0' : current + 1} / {total}
       </span>
       <input
         type="range"

@@ -27,13 +27,13 @@ export default function GraphVisualizer() {
       extra={
         <>
           <button type="button" className={algo === 'bfs' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('bfs')}>
-            Padosi-padosi (BFS)
+            Nearby first (BFS)
           </button>
           <button type="button" className={algo === 'dfs' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('dfs')}>
-            Gehra raasta (DFS)
+            Deep path (DFS)
           </button>
           <label className="text-sm font-semibold text-slate-600">
-            Kahan se shuru
+            Start from
             <select
               className="ml-2 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
               value={start}
@@ -41,7 +41,7 @@ export default function GraphVisualizer() {
             >
               {SAMPLE_GRAPH.nodes.map((n) => (
                 <option key={n.id} value={n.id}>
-                  Shehar {n.id}
+                  City {n.id}
                 </option>
               ))}
             </select>
@@ -105,18 +105,18 @@ export default function GraphVisualizer() {
       </div>
       <div className="mt-4 flex flex-wrap gap-2 text-sm font-semibold">
         <span className="chip bg-indigo-100 text-indigo-800">
-          {algo === 'bfs' ? 'Line' : 'Stack'}: {(algo === 'bfs' ? step.queue : step.stack)?.join(', ') || 'khaali'}
+          {algo === 'bfs' ? 'Queue' : 'Stack'}: {(algo === 'bfs' ? step.queue : step.stack)?.join(', ') || 'empty'}
         </span>
         <span className="chip bg-emerald-100 text-emerald-800">
-          Dekh chuke: {(step.visited ?? []).join(' → ') || '—'}
+          Visited: {(step.visited ?? []).join(' → ') || '—'}
         </span>
       </div>
       <Legend
         items={[
-          { label: 'Abhi nahi gaye', color: 'bg-slate-300' },
-          { label: 'Agla ummeedwar', color: 'bg-indigo-500' },
-          { label: 'Abhi yahan', color: 'bg-amber-400' },
-          { label: 'Dekh chuke', color: 'bg-emerald-500' },
+          { label: 'Not visited', color: 'bg-slate-300' },
+          { label: 'Next in line', color: 'bg-indigo-500' },
+          { label: 'We are here', color: 'bg-amber-400' },
+          { label: 'Already visited', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

@@ -13,9 +13,9 @@ const GENERATORS = {
 };
 
 const ALGO_LABEL = {
-  bubble: 'Pehle yeh: Bubble',
-  merge: 'Phir: Merge',
-  quick: 'Phir: Quick',
+  bubble: 'Start here: Bubble',
+  merge: 'Then: Merge',
+  quick: 'Then: Quick',
 };
 
 export default function SortingVisualizer() {
@@ -54,7 +54,7 @@ export default function SortingVisualizer() {
             </button>
           ))}
           <button type="button" className="btn-ghost" onClick={() => setSeed((s) => s + 1)}>
-            <Shuffle className="h-4 w-4" /> Nayi list
+            <Shuffle className="h-4 w-4" /> New list
           </button>
         </>
       }
@@ -68,7 +68,7 @@ export default function SortingVisualizer() {
           let tag = '';
           if (isSorted) {
             color = 'bg-emerald-500';
-            tag = 'sahi';
+            tag = 'done';
           } else if (step.pivot === idx) {
             color = 'bg-fuchsia-500';
             tag = 'leader';
@@ -77,7 +77,7 @@ export default function SortingVisualizer() {
             tag = 'swap';
           } else if (isComparing) {
             color = 'bg-amber-400';
-            tag = 'dekh';
+            tag = 'look';
           }
           if (muted && !isComparing && !isSorted) color = 'bg-slate-300';
 
@@ -98,10 +98,10 @@ export default function SortingVisualizer() {
       </div>
       <Legend
         items={[
-          { label: 'Aaram se khada', color: 'bg-indigo-500' },
-          { label: 'In dono ko dekh rahe', color: 'bg-amber-400' },
-          { label: 'Jagah badli (swap)', color: 'bg-rose-500' },
-          { label: 'Jagah pakki (sorted)', color: 'bg-emerald-500' },
+          { label: 'Standing still', color: 'bg-indigo-500' },
+          { label: 'Looking at these two', color: 'bg-amber-400' },
+          { label: 'Just swapped', color: 'bg-rose-500' },
+          { label: 'This spot is done', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

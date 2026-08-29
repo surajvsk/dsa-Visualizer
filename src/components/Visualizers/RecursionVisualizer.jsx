@@ -6,9 +6,9 @@ import { useVisualizerPlayer } from '../../hooks/useVisualizerPlayer';
 import VisualizerLayout, { Legend } from '../Layout/VisualizerLayout';
 
 const MODES = {
-  factorial: { label: 'Pehle: Factorial', run: (n) => factorialSteps(n), code: CODE.factorial, max: 6 },
-  fibonacci: { label: 'Phir: Fibonacci', run: (n) => fibonacciSteps(n), code: CODE.fibonacci, max: 5 },
-  memo: { label: 'Phir: yaad rakh ke', run: (n) => fibonacciMemoSteps(n), code: CODE.fibMemo, max: 7 },
+  factorial: { label: 'Start: Factorial', run: (n) => factorialSteps(n), code: CODE.factorial, max: 6 },
+  fibonacci: { label: 'Then: Fibonacci', run: (n) => fibonacciSteps(n), code: CODE.fibonacci, max: 5 },
+  memo: { label: 'Then: remember answers', run: (n) => fibonacciMemoSteps(n), code: CODE.fibMemo, max: 7 },
 };
 
 export default function RecursionVisualizer() {
@@ -40,7 +40,7 @@ export default function RecursionVisualizer() {
             </button>
           ))}
           <label className="text-sm font-semibold text-slate-600">
-            Kitna bada sawal (n)
+            How big is n
             <input
               type="number"
               min={1}
@@ -68,7 +68,7 @@ export default function RecursionVisualizer() {
                   className="rounded-2xl border-2 border-purple-200 bg-purple-50 px-4 py-3"
                 >
                   <p className="text-base font-bold text-purple-950">
-                    {call.functionName}({call.args}) wait kar raha
+                    {call.functionName}({call.args}) is waiting
                     {call.returning != null && (
                       <span className="ml-2 text-emerald-700">→ jawab {call.returning}</span>
                     )}
@@ -77,16 +77,16 @@ export default function RecursionVisualizer() {
               ))}
             </AnimatePresence>
             {(step.callStack ?? []).length === 0 && (
-              <p className="text-sm text-slate-500">Ab koi wait nahi kar raha.</p>
+              <p className="text-sm text-slate-500">Nobody is waiting now.</p>
             )}
           </div>
         </div>
         <div className="panel p-5">
-          <p className="text-sm font-extrabold text-slate-500">Aakhri jawab</p>
+          <p className="text-sm font-extrabold text-slate-500">Final answer</p>
           <p className="mt-2 text-4xl font-extrabold text-slate-900">{step.result ?? '—'}</p>
           {step.memo && Object.keys(step.memo).length > 0 && (
             <>
-              <p className="mt-5 text-sm font-extrabold text-slate-500">Copy (yaad)</p>
+              <p className="mt-5 text-sm font-extrabold text-slate-500">Notebook</p>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {Object.entries(step.memo).map(([k, v]) => (
                   <span key={k} className="chip bg-indigo-100 text-indigo-800">
@@ -100,8 +100,8 @@ export default function RecursionVisualizer() {
       </div>
       <Legend
         items={[
-          { label: 'Wait kar raha card', color: 'bg-purple-400' },
-          { label: 'Jawab mil gaya', color: 'bg-emerald-500' },
+          { label: 'Waiting card', color: 'bg-purple-400' },
+          { label: 'Got an answer', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

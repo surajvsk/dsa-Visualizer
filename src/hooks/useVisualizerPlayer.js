@@ -3,8 +3,8 @@ import { useAnimationQueue } from './useAnimationQueue';
 import { usePlayer } from '../context/PlayerContext';
 
 export function useVisualizerPlayer(steps) {
-  const { speed, register } = usePlayer();
-  const queue = useAnimationQueue(steps, speed);
+  const { speed, register, voiceOn } = usePlayer();
+  const queue = useAnimationQueue(steps, speed, voiceOn);
 
   useEffect(() => {
     register({

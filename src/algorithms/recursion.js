@@ -16,7 +16,7 @@ export function factorialSteps(n) {
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 1,
-      description: `fact(${k}) ko kaam diya. Yeh card stack par rakh diya — jawab ka wait karega.`,
+      description: `We called fact(${k}). This card waits on the stack until a smaller question answers.`,
       result: null,
     });
 
@@ -25,14 +25,14 @@ export function factorialSteps(n) {
       steps.push({
         callStack: stack.map((f) => ({ ...f })),
         line: 2,
-        description: `Rukne ki jagah aa gayi: fact(${k}) = 1. Ab isse chhota sawal nahi.`,
+        description: `Stop here. fact(${k}) is 1. There is no smaller question than this. This is the base case.`,
         result: null,
       });
       stack.pop();
       steps.push({
         callStack: stack.map((f) => ({ ...f })),
         line: 2,
-        description: `1 wapas de diya. Yeh card hatao — upar wala ab hisaab laga sakta hai.`,
+        description: `We return 1. Remove this card. The card above can now do its math.`,
         result: k === n ? 1 : null,
       });
       return 1;
@@ -44,14 +44,14 @@ export function factorialSteps(n) {
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 3,
-      description: `Neeche se ${sub} aaya. ${k} × ${sub} = ${value}. Yeh fact(${k}) ka jawab hai.`,
+      description: `The answer ${sub} came from below. ${k} times ${sub} is ${value}. That is fact(${k}).`,
       result: null,
     });
     stack.pop();
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 3,
-      description: `${value} wapas bheja. fact(${k}) ka card ab uth gaya.`,
+      description: `Send ${value} back up. The fact(${k}) card can leave.`,
       result: k === n ? value : null,
     });
     return value;
@@ -62,7 +62,7 @@ export function factorialSteps(n) {
     callStack: [],
     line: 3,
     done: true,
-    description: `Khatam. ${n}! matlab ${n} se 1 tak guna = ${result}.`,
+    description: `Finished. ${n} factorial means multiply from ${n} down to 1, which is ${result}.`,
     result,
   });
   return steps;
@@ -80,7 +80,7 @@ export function fibonacciSteps(n) {
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 1,
-      description: `fib(${k}) se poocha: ${k}th Fibonacci kya hai?`,
+      description: `Ask fib(${k}): what is Fibonacci number ${k}?`,
       result: null,
     });
 
@@ -89,14 +89,14 @@ export function fibonacciSteps(n) {
       steps.push({
         callStack: stack.map((f) => ({ ...f })),
         line: 2,
-        description: `Chhota sawal: fib(${k}) = ${k}. Yahan ruk jaate hain.`,
+        description: `Tiny question: fib(${k}) is just ${k}. We stop here.`,
         result: null,
       });
       stack.pop();
       steps.push({
         callStack: stack.map((f) => ({ ...f })),
         line: 2,
-        description: `${k} wapas diya. Card hatao.`,
+        description: `Return ${k} and take this card off the stack.`,
         result: null,
       });
       return k;
@@ -109,14 +109,14 @@ export function fibonacciSteps(n) {
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 3,
-      description: `Do chhote jawab: ${left} + ${right} = ${value}. Yeh fib(${k}) hai.`,
+      description: `Two small answers: ${left} plus ${right} is ${value}. That is fib(${k}).`,
       result: null,
     });
     stack.pop();
     steps.push({
       callStack: stack.map((f) => ({ ...f })),
       line: 3,
-      description: `${value} wapas. Dekho kitni baar same sawal dohra: isi liye recursion slow padti hai.`,
+      description: `Return ${value}. Notice the same question is asked many times. That is why this is slow.`,
       result: k === n ? value : null,
     });
     return value;
@@ -127,7 +127,7 @@ export function fibonacciSteps(n) {
     callStack: [],
     line: 3,
     done: true,
-    description: `fib(${n}) = ${result}. Same hisaab baar-baar hua — next mode (memo) mein yeh bachaenge.`,
+    description: `fib(${n}) is ${result}. We repeated the same work. Next, try the memo mode to skip repeats.`,
     result,
   });
   return steps;
@@ -150,7 +150,7 @@ export function fibonacciMemoSteps(n) {
         callStack: stack.map((f) => ({ ...f })),
         memo: { ...memo },
         line: 2,
-        description: `Copy mein pehle se likha hai: fib(${k}) = ${memo[k]}. Dobara mat gino!`,
+        description: `Already in the notebook: fib(${k}) is ${memo[k]}. Do not calculate again.`,
         result: null,
       });
       stack.pop();
@@ -161,7 +161,7 @@ export function fibonacciMemoSteps(n) {
       callStack: stack.map((f) => ({ ...f })),
       memo: { ...memo },
       line: 1,
-      description: `fib(${k}) copy mein nahi hai. Iska jawab nikalna padega.`,
+      description: `fib(${k}) is not in the notebook yet. We must work it out.`,
       result: null,
     });
 
@@ -172,7 +172,7 @@ export function fibonacciMemoSteps(n) {
         callStack: stack.map((f) => ({ ...f })),
         memo: { ...memo },
         line: 4,
-        description: `Chhota jawab copy mein likh diya: fib(${k}) = ${k}.`,
+        description: `Write the tiny answer in the notebook: fib(${k}) is ${k}.`,
         result: null,
       });
       stack.pop();
@@ -186,7 +186,7 @@ export function fibonacciMemoSteps(n) {
       callStack: stack.map((f) => ({ ...f })),
       memo: { ...memo },
       line: 6,
-      description: `Jawab mil gaya: fib(${k}) = ${value}. Copy mein save, agla copy se padhega.`,
+      description: `Got it: fib(${k}) is ${value}. Saved in the notebook for next time.`,
       result: null,
     });
     stack.pop();
@@ -199,7 +199,7 @@ export function fibonacciMemoSteps(n) {
     memo: { ...memo },
     line: 6,
     done: true,
-    description: `fib(${n}) = ${result}. Memo ki wajah se kaam bahut kam hua — DP ka yehi idea hai.`,
+    description: `fib(${n}) is ${result}. The notebook saved a lot of work. That is the idea behind DP.`,
     result,
   });
   return steps;

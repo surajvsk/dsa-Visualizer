@@ -7,7 +7,7 @@ export function fibonacciDpSteps(n) {
     dp: [...dp],
     filling: 0,
     line: 1,
-    description: 'Sabse chhota sawal: 0th Fibonacci = 0. Copy ke pehle khane mein likh diya.',
+    description: 'Smallest question first: Fibonacci of 0 is 0. Write it in the first cell of the notebook.',
   });
 
   if (n >= 1) {
@@ -16,7 +16,7 @@ export function fibonacciDpSteps(n) {
       dp: [...dp],
       filling: 1,
       line: 2,
-      description: 'Agla chhota sawal: 1st Fibonacci = 1. Yeh bhi copy mein.',
+      description: 'Next tiny question: Fibonacci of 1 is 1. Write that down too.',
     });
   }
 
@@ -26,7 +26,7 @@ export function fibonacciDpSteps(n) {
       filling: i,
       using: [i - 1, i - 2],
       line: 4,
-      description: `Naya sawal: pehle ke do jawab jodo. ${dp[i - 1]} + ${dp[i - 2]} — yeh fib(${i}) hoga.`,
+      description: `New question: add the two answers before this. ${dp[i - 1]} plus ${dp[i - 2]} will be fib ${i}.`,
     });
     dp[i] = dp[i - 1] + dp[i - 2];
     steps.push({
@@ -34,7 +34,7 @@ export function fibonacciDpSteps(n) {
       filling: i,
       using: [i - 1, i - 2],
       line: 5,
-      description: `Copy mein likh diya: fib(${i}) = ${dp[i]}. Agli baar yahi padhenge.`,
+      description: `Wrote it down: fib ${i} is ${dp[i]}. Next time we just read this cell.`,
     });
   }
 
@@ -43,7 +43,7 @@ export function fibonacciDpSteps(n) {
     filling: n,
     done: true,
     line: 6,
-    description: `Jawab mil gaya: fib(${n}) = ${dp[n]}. Recursion jaisa wait nahi, seedha table.`,
+    description: `The answer is ${dp[n]}. No waiting stack — just a table filling left to right.`,
   });
   return steps;
 }
@@ -59,7 +59,7 @@ export function lcsSteps(s1 = 'ABCBDAB', s2 = 'BDCABA') {
     i: 0,
     j: 0,
     line: 0,
-    description: `"${s1}" aur "${s2}" ki sabse lamba common subsequence. Table khali hai, ab bharenge.`,
+    description: `Longest common subsequence of "${s1}" and "${s2}". The table is empty. We fill it cell by cell.`,
     s1,
     s2,
   });
@@ -74,7 +74,7 @@ export function lcsSteps(s1 = 'ABCBDAB', s2 = 'BDCABA') {
           j,
           match: true,
           line: 3,
-          description: `Dono jagah '${s1[i - 1]}' hai — match! Length ${dp[i][j]} ho gayi.`,
+          description: `Both strings have '${s1[i - 1]}' here — a match! The length is now ${dp[i][j]}.`,
           s1,
           s2,
         });
@@ -86,7 +86,7 @@ export function lcsSteps(s1 = 'ABCBDAB', s2 = 'BDCABA') {
           j,
           match: false,
           line: 5,
-          description: `'${s1[i - 1]}' aur '${s2[j - 1]}' alag hain. Jo pehle se badi length thi, wahi rakho: ${dp[i][j]}.`,
+          description: `'${s1[i - 1]}' and '${s2[j - 1]}' are different. Keep the best length we already had: ${dp[i][j]}.`,
           s1,
           s2,
         });
@@ -100,7 +100,7 @@ export function lcsSteps(s1 = 'ABCBDAB', s2 = 'BDCABA') {
     j: n,
     done: true,
     line: 7,
-    description: `Sabse lamba common hissa ${dp[m][n]} letters ka hai.`,
+    description: `The longest common piece is ${dp[m][n]} letters long.`,
     s1,
     s2,
   });

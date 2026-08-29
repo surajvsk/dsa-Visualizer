@@ -12,25 +12,25 @@ export function linkedListInsertHeadSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `${value} ko train ke sabse aage (head) jodna hai.`,
+      description: `We will add ${value} at the front of the train — that front is called the head.`,
     },
   ];
   const fresh = { id: `n-new`, value, highlight: true, inserting: true };
   steps.push({
     nodes: [fresh, ...snapshot(nodes)],
     line: 1,
-    description: `Naya dabba banaya — usme ${value} hai.`,
+    description: `Make a new carriage. It holds ${value}.`,
   });
   steps.push({
     nodes: [{ ...fresh, inserting: false, highlight: true }, ...snapshot(nodes)],
     line: 2,
-    description: `Naye dabbe ka arrow purane pehle dabbe ko dikhata hai.`,
+    description: `The new carriage's arrow now points to the old first carriage.`,
   });
   steps.push({
     nodes: [{ ...fresh, inserting: false, highlight: false }, ...snapshot(nodes)],
     done: true,
     line: 3,
-    description: `Ab head ${value} hai. Shuruat par jodna itna aasan isliye hai.`,
+    description: `Head is now ${value}. Adding at the front is easy for that reason.`,
   });
   return steps;
 }
@@ -41,27 +41,27 @@ export function linkedListInsertTailSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `${value} ko last mein jodna hai. Pehle poori train chalne padegi.`,
+      description: `We will add ${value} at the end. First we must walk the whole train.`,
     },
   ];
   for (let i = 0; i < nodes.length; i++) {
     steps.push({
       nodes: snapshot(nodes).map((n, idx) => ({ ...n, highlight: idx === i })),
       line: 2,
-      description: `${nodes[i].value} par aaye. Last dabba abhi nahi mila, aage badho.`,
+      description: `Now at ${nodes[i].value}. Not the last carriage yet. Keep walking.`,
     });
   }
   const fresh = { id: `n-new`, value, highlight: true, inserting: true };
   steps.push({
     nodes: [...snapshot(nodes), fresh],
     line: 4,
-    description: `Aakhri dabbe ka arrow ab ${value} ko dikhata hai.`,
+    description: `The last carriage's arrow now points to ${value}.`,
   });
   steps.push({
     nodes: [...snapshot(nodes), { ...fresh, inserting: false, highlight: false }],
     done: true,
     line: 5,
-    description: `${value} ab last dabba hai.`,
+    description: `${value} is the new last carriage.`,
   });
   return steps;
 }
@@ -72,7 +72,7 @@ export function linkedListDeleteSteps(values, value) {
     {
       nodes: snapshot(nodes),
       line: 0,
-      description: `${value} wala dabba hataana hai. Pehle us tak chal ke jaao.`,
+      description: `Remove the carriage that holds ${value}. First walk until we find it.`,
     },
   ];
   const idx = nodes.findIndex((n) => n.value === value);
@@ -81,7 +81,7 @@ export function linkedListDeleteSteps(values, value) {
       nodes: snapshot(nodes),
       done: true,
       line: 6,
-      description: `${value} is train mein hai hi nahi.`,
+      description: `${value} is not on this train.`,
     });
     return steps;
   }
@@ -89,7 +89,7 @@ export function linkedListDeleteSteps(values, value) {
     steps.push({
       nodes: snapshot(nodes).map((n, j) => ({ ...n, highlight: j === i })),
       line: 2,
-      description: i === idx ? `${value} mil gaya — is dabbe ko line se alag karo.` : `${nodes[i].value} ${value} nahi hai, aage dekho.`,
+      description: i === idx ? `Found ${value}. Unhook this carriage from the line.` : `${nodes[i].value} is not ${value}. Keep going.`,
     });
   }
   const remaining = nodes.filter((_, i) => i !== idx);
@@ -97,7 +97,7 @@ export function linkedListDeleteSteps(values, value) {
     nodes: snapshot(remaining),
     done: true,
     line: 4,
-    description: `${value} nikal gaya. Pichla dabba seedha agle se jud gaya.`,
+    description: `${value} is gone. The previous carriage now points straight to the next one.`,
   });
   return steps;
 }
@@ -109,7 +109,7 @@ export function arrayInsertSteps(arr, index, value) {
       array: [...a],
       highlight: [],
       line: 0,
-      description: `${value} ko khana ${index} mein daalna hai. Aage wale right ko sarakenge, jagah banane ke liye.`,
+      description: `Put ${value} into locker ${index}. Everyone after it must slide right to make space.`,
     },
   ];
   a.push(null);
@@ -119,7 +119,7 @@ export function arrayInsertSteps(arr, index, value) {
       array: [...a],
       highlight: [i, i - 1],
       line: 3,
-      description: `${a[i]} ko ek khana right khiska diya (${i - 1} se ${i}).`,
+      description: `Slide ${a[i]} one locker to the right, from ${i - 1} to ${i}.`,
     });
   }
   a[index] = value;
@@ -128,14 +128,14 @@ export function arrayInsertSteps(arr, index, value) {
     highlight: [index],
     swapped: true,
     line: 5,
-    description: `Khali jagah mein ${value} baith gaya (khana ${index}).`,
+    description: `${value} sits in the empty locker — locker ${index}.`,
   });
   steps.push({
     array: [...a],
     highlight: [index],
     done: true,
     line: 5,
-    description: 'Ho gaya. Array ab 1 lambi hai. Beech mein daalna isliye mehnga pada — sabko hataana pada.',
+    description: 'Done. The array is one longer. Inserting in the middle was slow because everyone had to move.',
   });
   return steps;
 }
@@ -147,7 +147,7 @@ export function arrayDeleteSteps(arr, index) {
       array: [...a],
       highlight: [index],
       line: 0,
-      description: `Khana ${index} (${a[index]}) nikalna hai. Gap band karne ke liye aage wale left aayenge.`,
+      description: `Remove locker ${index} (it holds ${a[index]}). Neighbors slide left to close the gap.`,
     },
   ];
   const removed = a[index];
@@ -157,7 +157,7 @@ export function arrayDeleteSteps(arr, index) {
       array: [...a],
       highlight: [i, i + 1],
       line: 3,
-      description: `Agla number khana ${i} mein aa gaya, gap pat raha hai.`,
+      description: `The next number slid into locker ${i}. The gap is closing.`,
     });
   }
   a.pop();
@@ -166,7 +166,7 @@ export function arrayDeleteSteps(arr, index) {
     highlight: [],
     done: true,
     line: 6,
-    description: `${removed} nikal gaya. Array 1 chhoti ho gayi.`,
+    description: `${removed} is gone. The array is one shorter.`,
   });
   return steps;
 }
@@ -188,7 +188,7 @@ export function stackDemoSteps() {
     stack: [],
     op: null,
     line: 0,
-    description: 'Stack khaali hai. Socho plates ki gaddi — nayi plate hamesha upar rakhti hai.',
+    description: 'The stack is empty. Think of a pile of plates. A new plate always goes on top.',
   });
 
   for (const [op, value] of ops) {
@@ -199,7 +199,7 @@ export function stackDemoSteps() {
         op: 'push',
         value,
         line: 2,
-        description: `${value} upar rakh di. Ab sabse upar yahi hai — nikalna hoga to pehle yahi uthegi.`,
+        description: `Put ${value} on top. If we take one now, this is the plate we get.`,
       });
     } else {
       const popped = stack.pop();
@@ -208,7 +208,7 @@ export function stackDemoSteps() {
         op: 'pop',
         value: popped,
         line: 5,
-        description: `${popped} uth gayi (upar wali). Ab upar ${stack[stack.length - 1] ?? 'kuch nahi'}.`,
+        description: `Took ${popped} from the top. Now the top is ${stack[stack.length - 1] ?? 'empty'}.`,
       });
     }
   }
@@ -218,7 +218,7 @@ export function stackDemoSteps() {
     op: null,
     done: true,
     line: 7,
-    description: 'Stack demo khatam. Jo last gaya, wahi pehle nikla.',
+    description: 'Stack demo finished. Last plate on was the first plate off.',
   });
   return steps;
 }
@@ -239,7 +239,7 @@ export function queueDemoSteps() {
     queue: [],
     op: null,
     line: 0,
-    description: 'Queue khaali hai. Ticket line socho — peeche lagte ho, aage se nikalte ho.',
+    description: 'The queue is empty. Think of a ticket line. You join at the back. You leave from the front.',
   });
 
   for (const [op, value] of ops) {
@@ -250,7 +250,7 @@ export function queueDemoSteps() {
         op: 'enqueue',
         value,
         line: 2,
-        description: `${value} line ke peeche lag gaya.`,
+        description: `${value} joined the back of the line.`,
       });
     } else {
       const removed = queue.shift();
@@ -259,7 +259,7 @@ export function queueDemoSteps() {
         op: 'dequeue',
         value: removed,
         line: 5,
-        description: `${removed} aage se nikal gaya (jo pehle aaya tha).`,
+        description: `${removed} left from the front — the person who had been waiting longest.`,
       });
     }
   }
@@ -269,7 +269,7 @@ export function queueDemoSteps() {
     op: null,
     done: true,
     line: 7,
-    description: 'Queue demo khatam. Jo pehle line mein aaya, wahi pehle nikla.',
+    description: 'Queue demo finished. First in line was first to leave.',
   });
   return steps;
 }

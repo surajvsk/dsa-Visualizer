@@ -16,7 +16,7 @@ export function bubbleSortSteps(arr) {
     swapped: false,
     sorted: [],
     line: 0,
-    description: 'Bubble Sort shuru. Do padosi numbers dekhenge — jo bada hai, wo right ko jaayega.',
+    description: 'Bubble sort starts. We will look at two neighbors. The bigger one should move right.',
   });
 
   for (let i = 0; i < a.length; i++) {
@@ -29,7 +29,7 @@ export function bubbleSortSteps(arr) {
         swapped: false,
         sorted,
         line: 2,
-        description: `In dono ko dekho: ${a[j].value} aur ${a[j + 1].value}. Kaun bada hai?`,
+        description: `Look at these two neighbors: ${a[j].value} and ${a[j + 1].value}. Which is bigger?`,
       });
 
       if (a[j].value > a[j + 1].value) {
@@ -41,7 +41,7 @@ export function bubbleSortSteps(arr) {
           swapped: true,
           sorted,
           line: 4,
-          description: `Galat order tha, jagah badli. Ab ${a[j].value} left, ${a[j + 1].value} right.`,
+          description: `Wrong order, so they swap. Now ${a[j].value} is on the left and ${a[j + 1].value} is on the right.`,
         });
       }
     }
@@ -53,7 +53,7 @@ export function bubbleSortSteps(arr) {
         sorted: Array.from({ length: a.length }, (_, k) => k),
         done: true,
         line: 6,
-        description: 'Is daur mein koi swap nahi — pehle se sahi order mein hain.',
+        description: 'No swaps this round — the list was already in order.',
       });
       return steps;
     }
@@ -66,7 +66,7 @@ export function bubbleSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 7,
-    description: 'Ho gaya. Sabse bade numbers right aa chuke — jaise bubble upar uthte hain.',
+    description: 'Done. The biggest numbers drifted to the right, like bubbles floating up.',
   });
   return steps;
 }
@@ -80,7 +80,7 @@ export function mergeSortSteps(arr) {
     comparing: [],
     range: [0, a.length - 1],
     line: 0,
-    description: 'Merge Sort: pehle list aadha-aadha kaato, phir chhote sorted tukde jodo.',
+    description: 'Merge sort: first split the list in half, then stitch the small sorted pieces back together.',
   });
 
   function mergeSort(l, r) {
@@ -91,7 +91,7 @@ export function mergeSortSteps(arr) {
       comparing: [],
       range: [l, r],
       line: 1,
-      description: `Is hisse ko aadha kaato (${l} se ${r}). Beech = ${mid}.`,
+      description: `Split this piece in half, from ${l} to ${r}. The middle is ${mid}.`,
     });
     mergeSort(l, mid);
     mergeSort(mid + 1, r);
@@ -111,7 +111,7 @@ export function mergeSortSteps(arr) {
         comparing: [l + i, mid + 1 + j],
         range: [l, r],
         line: 6,
-        description: `Do tukde jod rahe hain. ${left[i].value} aur ${right[j].value} mein se chhota aage aayega.`,
+        description: `Joining two pieces. The smaller of ${left[i].value} and ${right[j].value} goes next.`,
       });
       if (left[i].value <= right[j].value) {
         a[k] = left[i];
@@ -126,7 +126,7 @@ export function mergeSortSteps(arr) {
         swapped: true,
         range: [l, r],
         line: 8,
-        description: `${a[k].value} ko jagah ${k} par rakh diya.`,
+        description: `${a[k].value} is placed at position ${k}.`,
       });
       k += 1;
     }
@@ -138,7 +138,7 @@ export function mergeSortSteps(arr) {
         comparing: [k],
         range: [l, r],
         line: 12,
-        description: `Left tukde ka bacha ${a[k].value} bhi rakh diya.`,
+        description: `Copy the leftover ${a[k].value} from the left piece.`,
       });
       i += 1;
       k += 1;
@@ -151,7 +151,7 @@ export function mergeSortSteps(arr) {
         comparing: [k],
         range: [l, r],
         line: 15,
-        description: `Right tukde ka bacha ${a[k].value} bhi rakh diya.`,
+        description: `Copy the leftover ${a[k].value} from the right piece.`,
       });
       j += 1;
       k += 1;
@@ -165,7 +165,7 @@ export function mergeSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 17,
-    description: 'Merge Sort khatam. Chhote tukde jod-jod ke poori list sorted ho gayi.',
+    description: 'Merge sort is finished. Tiny sorted pieces were joined until the whole list was sorted.',
   });
   return steps;
 }
@@ -179,7 +179,7 @@ export function quickSortSteps(arr) {
     comparing: [],
     pivot: null,
     line: 0,
-    description: 'Quick Sort: ek leader (pivot) chuno. Chhote uske left, bade right.',
+    description: 'Quick sort: pick a leader, called the pivot. Smaller numbers go left. Bigger go right.',
   });
 
   function partition(low, high) {
@@ -191,7 +191,7 @@ export function quickSortSteps(arr) {
       pivot: high,
       range: [low, high],
       line: 2,
-      description: `Yeh hamara leader hai: ${pivotValue}. Isi se baaki ko naapen ge.`,
+      description: `This is our leader: ${pivotValue}. Everyone else is compared with this number.`,
     });
 
     for (let j = low; j < high; j++) {
@@ -201,7 +201,7 @@ export function quickSortSteps(arr) {
         pivot: high,
         range: [low, high],
         line: 5,
-        description: `${a[j].value} ko leader ${pivotValue} se naap rahe hain.`,
+        description: `Is ${a[j].value} smaller than the leader ${pivotValue}?`,
       });
       if (a[j].value < pivotValue) {
         [a[i], a[j]] = [a[j], a[i]];
@@ -212,7 +212,7 @@ export function quickSortSteps(arr) {
           pivot: high,
           range: [low, high],
           line: 7,
-          description: `${a[i].value} leader se chhota hai — left side bhej diya.`,
+          description: `Yes. ${a[i].value} is smaller, so it moves to the left side.`,
         });
         i += 1;
       }
@@ -225,7 +225,7 @@ export function quickSortSteps(arr) {
       pivot: i,
       range: [low, high],
       line: 10,
-      description: `Leader ${a[i].value} ab beech mein baith gaya. Left chhote, right bade.`,
+      description: `The leader ${a[i].value} sits in the middle now. Left is smaller, right is bigger.`,
     });
     return i;
   }
@@ -245,7 +245,7 @@ export function quickSortSteps(arr) {
     sorted: a.map((_, i) => i),
     done: true,
     line: 16,
-    description: 'Quick Sort khatam. Har hisse ka leader apni sahi jagah aa gaya.',
+    description: 'Quick sort is done. Every piece found its leader a home.',
   });
   return steps;
 }

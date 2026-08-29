@@ -4,6 +4,7 @@ const PlayerContext = createContext(null);
 
 export function PlayerProvider({ children }) {
   const [speed, setSpeed] = useState(850);
+  const [voiceOn, setVoiceOn] = useState(true);
   const [controls, setControls] = useState(null);
 
   const register = useCallback((api) => setControls(api), []);
@@ -27,8 +28,8 @@ export function PlayerProvider({ children }) {
   }, [controls]);
 
   const value = useMemo(
-    () => ({ speed, setSpeed, controls, register }),
-    [speed, controls, register]
+    () => ({ speed, setSpeed, voiceOn, setVoiceOn, controls, register }),
+    [speed, voiceOn, controls, register]
   );
 
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;

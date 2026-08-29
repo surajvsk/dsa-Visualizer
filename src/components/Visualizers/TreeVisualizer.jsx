@@ -26,9 +26,9 @@ export default function TreeVisualizer() {
       extra={
         <>
           {[
-            ['inorder', 'Left → khud → right'],
-            ['preorder', 'Pehle khud'],
-            ['postorder', 'Last mein khud'],
+            ['inorder', 'Left → me → right'],
+            ['preorder', 'Me first'],
+            ['postorder', 'Me last'],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -92,13 +92,13 @@ export default function TreeVisualizer() {
         </svg>
       </div>
       <p className="mt-3 text-base font-bold text-slate-700">
-        Ab tak likha: {(step.visited ?? []).join(' → ') || 'abhi kuch nahi'}
+        Written so far: {(step.visited ?? []).join(' → ') || 'nothing yet'}
       </p>
       <Legend
         items={[
-          { label: 'Abhi nahi dekha', color: 'bg-slate-300' },
-          { label: 'Yahan hain', color: 'bg-amber-400' },
-          { label: 'Likh chuke', color: 'bg-emerald-500' },
+          { label: 'Not visited', color: 'bg-slate-300' },
+          { label: 'We are here', color: 'bg-amber-400' },
+          { label: 'Already written', color: 'bg-emerald-500' },
         ]}
       />
     </VisualizerLayout>

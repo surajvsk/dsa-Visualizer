@@ -16,7 +16,7 @@ export default function ArrayVisualizer() {
   const steps = useMemo(() => {
     const idx = Math.max(0, Math.min(index, mode === 'insert' ? BASE.length : BASE.length - 1));
     return mode === 'insert' ? arrayInsertSteps(BASE, idx, value) : arrayDeleteSteps(BASE, idx);
-    // run forces a fresh step list after "Phir se taiyar"
+    // run forces a fresh step list after Rebuild steps
   }, [mode, index, value, run]);
 
   const { currentStep } = useVisualizerPlayer(steps);
@@ -32,13 +32,13 @@ export default function ArrayVisualizer() {
       extra={
         <>
           <button type="button" className={mode === 'insert' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('insert')}>
-            Beech mein daalo
+            Insert in the middle
           </button>
           <button type="button" className={mode === 'delete' ? 'btn-primary' : 'btn-ghost'} onClick={() => setMode('delete')}>
-            Nikaalo
+            Delete
           </button>
           <label className="text-sm font-semibold text-slate-600">
-            Kaunsa khana
+            Which locker
             <input
               type="number"
               className="ml-2 w-16 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
@@ -50,7 +50,7 @@ export default function ArrayVisualizer() {
           </label>
           {mode === 'insert' && (
             <label className="text-sm font-semibold text-slate-600">
-              Kaunsa number
+              Which number
               <input
                 type="number"
                 className="ml-2 w-16 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
@@ -60,13 +60,13 @@ export default function ArrayVisualizer() {
             </label>
           )}
           <button type="button" className="btn-ghost" onClick={() => setRun((r) => r + 1)}>
-            Phir se taiyar
+            Rebuild steps
           </button>
         </>
       }
     >
       <div className="panel overflow-x-auto p-6">
-        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">Khana number (index)</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">Locker number (index)</p>
         <div className="mb-2 flex gap-2 text-center text-sm font-bold text-slate-500">
           {step.array.map((_, i) => (
             <span key={`i-${i}`} className="w-16">
@@ -94,8 +94,8 @@ export default function ArrayVisualizer() {
       </div>
       <Legend
         items={[
-          { label: 'Saadi khana', color: 'bg-slate-300' },
-          { label: 'Abhi yahan kaam ho raha', color: 'bg-amber-400' },
+          { label: 'Normal locker', color: 'bg-slate-300' },
+          { label: 'Moving right now', color: 'bg-amber-400' },
         ]}
       />
     </VisualizerLayout>

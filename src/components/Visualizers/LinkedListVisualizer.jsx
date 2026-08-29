@@ -34,9 +34,9 @@ export default function LinkedListVisualizer() {
       extra={
         <>
           {[
-            ['head', 'Aage jodo'],
-            ['tail', 'Peeche jodo'],
-            ['delete', 'Dabba hatao'],
+            ['head', 'Add at front'],
+            ['tail', 'Add at end'],
+            ['delete', 'Remove a box'],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -61,7 +61,7 @@ export default function LinkedListVisualizer() {
     >
       <div className="panel overflow-x-auto p-8">
         <div className="flex items-center gap-2">
-          <span className="mr-1 text-sm font-extrabold text-teal-700">Shuruat →</span>
+          <span className="mr-1 text-sm font-extrabold text-teal-700">Start →</span>
           <AnimatePresence initial={false}>
             {(step.nodes ?? []).map((node, i) => (
               <motion.div
@@ -89,13 +89,13 @@ export default function LinkedListVisualizer() {
               </motion.div>
             ))}
           </AnimatePresence>
-          <span className="ml-2 text-sm font-semibold text-slate-400">khatam</span>
+          <span className="ml-2 text-sm font-semibold text-slate-400">end</span>
         </div>
       </div>
       <Legend
         items={[
-          { label: 'Dabba', color: 'bg-teal-400' },
-          { label: 'Abhi is par nazar', color: 'bg-amber-400' },
+          { label: 'Carriage', color: 'bg-teal-400' },
+          { label: 'Looking here', color: 'bg-amber-400' },
         ]}
       />
     </VisualizerLayout>

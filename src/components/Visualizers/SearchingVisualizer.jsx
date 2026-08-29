@@ -27,13 +27,13 @@ export default function SearchingVisualizer() {
       extra={
         <>
           <button type="button" className={algo === 'linear' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('linear')}>
-            Seedha dhoondho (Linear)
+            One by one (Linear)
           </button>
           <button type="button" className={algo === 'binary' ? 'btn-primary' : 'btn-ghost'} onClick={() => setAlgo('binary')}>
-            Aadha kaato (Binary)
+            Cut in half (Binary)
           </button>
           <label className="text-sm font-semibold text-slate-600">
-            Kya dhoondhna hai
+            Find this number
             <input
               type="number"
               className="ml-2 w-20 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-slate-800"
@@ -64,24 +64,24 @@ export default function SearchingVisualizer() {
                 className={`flex h-20 w-14 shrink-0 flex-col items-center justify-center rounded-2xl text-base font-extrabold ${color}`}
               >
                 {value}
-                <span className="mt-1 text-[10px] font-bold opacity-70">khana {idx}</span>
+                <span className="mt-1 text-[10px] font-bold opacity-70">box {idx}</span>
               </motion.div>
             );
           })}
         </div>
         {algo === 'binary' && (
           <p className="mt-4 text-sm font-semibold text-slate-600">
-            Bacha hua hissa: khana {step.low ?? '—'} se {step.high ?? '—'} tak
-            {step.mid != null ? ` · ab beech = ${step.mid}` : ''}
+            Still in range: boxes {step.low ?? '—'} to {step.high ?? '—'}
+            {step.mid != null ? ` · middle is ${step.mid}` : ''}
           </p>
         )}
       </div>
       <Legend
         items={[
-          { label: 'Abhi is hisse mein ho sakta', color: 'bg-indigo-500' },
-          { label: 'Yahi box khol rahe', color: 'bg-amber-400' },
-          { label: 'Mil gaya', color: 'bg-emerald-500' },
-          { label: 'Fenk diya', color: 'bg-slate-300' },
+          { label: 'Could still be here', color: 'bg-indigo-500' },
+          { label: 'Opening this box', color: 'bg-amber-400' },
+          { label: 'Found it', color: 'bg-emerald-500' },
+          { label: 'Thrown away', color: 'bg-slate-300' },
         ]}
       />
     </VisualizerLayout>

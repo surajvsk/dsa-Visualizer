@@ -29,7 +29,7 @@ export function bfsSteps(graph, start) {
     visited: [],
     queue: [...queue],
     line: 1,
-    description: `${start} se ghumna shuru. Queue (line) use hogi — jo pehle aaya, usi shehar pehle dekhenge.`,
+    description: `${start} is where we begin. We use a queue — a waiting line. Whoever joined first is visited first.`,
   });
 
   while (queue.length) {
@@ -39,7 +39,7 @@ export function bfsSteps(graph, start) {
       visited: [...visited],
       queue: [...queue],
       line: 4,
-      description: `${node} line se nikal aaya. Ab yahi shehar dekhte hain.`,
+      description: `${node} left the line. We are looking at this city now.`,
     });
     if (visited.has(node)) {
       steps.push({
@@ -47,7 +47,7 @@ export function bfsSteps(graph, start) {
         visited: [...visited],
         queue: [...queue],
         line: 5,
-        description: `${node} pehle dekh chuke. Skip — time barbaad nahi.`,
+        description: `We already visited ${node}. Skip it — no need to do the work twice.`,
       });
       continue;
     }
@@ -59,7 +59,7 @@ export function bfsSteps(graph, start) {
       visited: [...visited],
       queue: [...queue],
       line: 8,
-      description: `${node} dekh liya. Padosi line mein: ${neighbors.join(', ') || 'koi naya nahi'}.`,
+      description: `Visited ${node}. Neighbors joining the line: ${neighbors.join(', ') || 'none new'}.`,
     });
   }
 
@@ -69,7 +69,7 @@ export function bfsSteps(graph, start) {
     queue: [],
     done: true,
     line: 10,
-    description: `Poora naksha dekh liya. Order: ${[...visited].join(' → ')} (padosi-padosi).`,
+    description: `We walked the whole map. Visit order: ${[...visited].join(' then ')}. Nearby cities first.`,
   });
   return steps;
 }
@@ -84,7 +84,7 @@ export function dfsSteps(graph, start) {
     visited: [],
     stack: [...stack],
     line: 1,
-    description: `${start} se ghumna. Stack use hoga — jo last mein aaya, usi raaste gehraai tak jaayenge.`,
+    description: `Start at ${start}. We use a stack. The last city we added is the next one we dive into.`,
   });
 
   while (stack.length) {
@@ -94,7 +94,7 @@ export function dfsSteps(graph, start) {
       visited: [...visited],
       stack: [...stack],
       line: 4,
-      description: `${node} stack se nikala. Ab is raaste ko gehraai tak dekho.`,
+      description: `Pop ${node} off the stack. Now follow this path deeper.`,
     });
     if (visited.has(node)) {
       steps.push({
@@ -102,7 +102,7 @@ export function dfsSteps(graph, start) {
         visited: [...visited],
         stack: [...stack],
         line: 5,
-        description: `${node} pehle dekh chuke. Skip — time barbaad nahi.`,
+        description: `We already visited ${node}. Skip it — no need to do the work twice.`,
       });
       continue;
     }
@@ -114,7 +114,7 @@ export function dfsSteps(graph, start) {
       visited: [...visited],
       stack: [...stack],
       line: 8,
-      description: `${node} dekh liya. Agle raaste stack par: ${neighbors.join(', ') || 'koi naya nahi'}.`,
+      description: `Visited ${node}. Next paths on the stack: ${neighbors.join(', ') || 'none new'}.`,
     });
   }
 
@@ -124,7 +124,7 @@ export function dfsSteps(graph, start) {
     stack: [],
     done: true,
     line: 10,
-    description: `DFS khatam. Order: ${[...visited].join(' → ')} (ek raasta gehra, phir doosra).`,
+    description: `Depth-first search is done. Order: ${[...visited].join(' then ')}. One deep path, then another.`,
   });
   return steps;
 }

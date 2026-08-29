@@ -30,7 +30,7 @@ export default function StackQueueVisualizer() {
     >
       {mode === 'stack' ? (
         <div className="panel mx-auto flex min-h-[340px] w-full max-w-sm flex-col-reverse items-center justify-start gap-2 p-6">
-          <p className="text-sm font-bold text-slate-400">Neeche — yahan se nahi nikalta</p>
+          <p className="text-sm font-bold text-slate-400">Bottom — we never take from here</p>
           <AnimatePresence>
             {(step.stack ?? []).map((v, i) => (
               <motion.div
@@ -47,18 +47,18 @@ export default function StackQueueVisualizer() {
               >
                 {v}
                 {i === (step.stack?.length ?? 0) - 1 && (
-                  <span className="ml-2 text-xs font-bold text-violet-600">upar</span>
+                  <span className="ml-2 text-xs font-bold text-violet-600">top</span>
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
-          <p className="text-sm font-extrabold text-violet-700">Upar — yahi uthati hai</p>
+          <p className="text-sm font-extrabold text-violet-700">Top — this plate comes off</p>
         </div>
       ) : (
         <div className="panel overflow-x-auto p-8">
           <div className="mb-3 flex justify-between text-sm font-extrabold text-slate-500">
-            <span>Aage (niklega)</span>
-            <span>Peeche (lagega)</span>
+            <span>Front (leaves here)</span>
+            <span>Back (joins here)</span>
           </div>
           <div className="flex min-h-[88px] items-center gap-2">
             <AnimatePresence>
@@ -84,12 +84,12 @@ export default function StackQueueVisualizer() {
         items={
           mode === 'stack'
             ? [
-                { label: 'Neeche dabi', color: 'bg-slate-300' },
-                { label: 'Upar wali plate', color: 'bg-violet-400' },
+                { label: 'Buried below', color: 'bg-slate-300' },
+                { label: 'Top plate', color: 'bg-violet-400' },
               ]
             : [
-                { label: 'Line mein wait', color: 'bg-slate-300' },
-                { label: 'Jo ab nikalega', color: 'bg-sky-400' },
+                { label: 'Waiting in line', color: 'bg-slate-300' },
+                { label: 'Next to leave', color: 'bg-sky-400' },
               ]
         }
       />

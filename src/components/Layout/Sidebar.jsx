@@ -12,13 +12,13 @@ export default function Sidebar({ topic, onSelect, open, onClose }) {
         />
       )}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col border-r border-slate-200 bg-paper pt-16 transition-transform lg:static lg:z-0 lg:translate-x-0 lg:pt-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col border-r border-slate-200 bg-[#fffdf8] pt-16 transition-transform lg:static lg:z-0 lg:translate-x-0 lg:pt-0 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="px-4 pb-2 pt-4">
-          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Yahan se shuru</p>
-          <p className="mt-1 text-sm text-slate-500">Upar se neeche, aasaan se mushkil</p>
+          <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-400">Start here</p>
+          <p className="mt-1 text-sm text-slate-500">Top to bottom, easy to harder</p>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-6 scrollbar-thin">
           {TOPICS.map((item) => {

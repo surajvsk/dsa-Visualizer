@@ -10,11 +10,11 @@ export default function PlayPauseButton({ isPlaying, onPlay, onPause, disabled }
     >
       {isPlaying ? (
         <>
-          <Pause className="h-5 w-5" /> Ruko
+          <Pause className="h-5 w-5" /> Pause
         </>
       ) : (
         <>
-          <Play className="h-5 w-5" /> Chalao
+          <Play className="h-5 w-5" /> Play
         </>
       )}
     </button>
